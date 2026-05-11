@@ -1,0 +1,52 @@
+.playgrounds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card */
+.playground-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.playground-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+.playground-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #1f2933;
+}
+
+/* Text */
+.playground-card p {
+  font-size: 0.9rem;
+  margin: 6px 0;
+  color: #4b5563;
+}
+
+/* Map link */
+.playground-card a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.playground-card a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
