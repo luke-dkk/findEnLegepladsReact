@@ -87,8 +87,8 @@ const [userLocation, setUserLocation] = useState(null);
 
             <a
               //href={`https://www.google.com/maps?q=${playground.name},${playground.latitude},${playground.longitude}`}
-                         //   href={`https://www.google.com/maps?q=${playground.latitude},${playground.longitude}`}
-             href={`https://www.google.com/maps?q=${playground.name}`}
+              //href={`https://www.google.com/maps?q=${playground.latitude},${playground.longitude}`}
+              href={`https://www.google.com/maps?q=${playground.name}`}
               target="_blank"
               rel="noopener noreferrer"
             >

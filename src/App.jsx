@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Outlet } from 'react-router'
 import playGroundApiFacade from './Api/ApiFacade'
 import PlaygroundList from './components/PlaygroundList'
  
@@ -24,7 +25,9 @@ useEffect(() => {
 
   return (
     <>
+    <Outlet />
     <PlaygroundList playgrounds={playgrounds}/>
+    
     </>
   )
 }
