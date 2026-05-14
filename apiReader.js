@@ -1,5 +1,5 @@
 
-const BACKEND_URL = 'http://localhost:7075/api/auth/'
+const BACKEND_URL = 'http://findenlegeplads.team-ice.dk/api/auth/'
 
 export async function login(credentials) {
   const response = await fetch(`${BACKEND_URL}login`, {

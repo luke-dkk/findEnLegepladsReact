@@ -12,12 +12,9 @@ function App() {
 
 useEffect(() => {
   (async () => {
-  
-  
     const playgroundFromServer = await playGroundApiFacade.getAllPlaygrounds();
     setPlaygrounds(playgroundFromServer);
   })();
-
 },[]);
 
 

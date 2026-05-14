@@ -5,11 +5,12 @@ import './index.css'
 import App from './App.jsx'
 import  Login from './components/login/Login'
 import  Register from './components/register/Register.jsx'
+import Playground from './components/playground/Playground.jsx'
 import  {NotFound} from './components/utils/utils.jsx'
 
 
 createRoot(document.getElementById('root')).render(
-    <StrictMode>
+   <StrictMode>
     <BrowserRouter>
       <Routes>
 
@@ -18,8 +19,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/auth">
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-        </Route>
-
+          </Route>          
+        <Route path="playground/:id" element={<Playground />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

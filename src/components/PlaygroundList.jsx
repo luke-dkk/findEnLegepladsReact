@@ -1,9 +1,10 @@
 import './PlaygroundList.css';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 
 function PlaygroundList({playgrounds}) {
-
+const nav = useNavigate();
 const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
@@ -57,6 +58,16 @@ const [userLocation, setUserLocation] = useState(null);
       })
     : playgrounds;
 
+
+  function HandlePlaygroundClick(playground){
+    console.log("You have clikcked on playground: " + playground.id) 
+    nav(`/playground/${playground.id}`)
+  }
+
+  if (!playgrounds || playgrounds.length === 0) {
+    return <h1>Playgrounds are loading</h1>;
+  }
+
   return (
     <div className="playgrounds">
       {sortedPlaygrounds.map((playground) => {
@@ -70,7 +81,13 @@ const [userLocation, setUserLocation] = useState(null);
           );
 
         return (
-          <div key={playground.id} className="playground-card">
+          <div 
+          key={playground.id} 
+          className="playground-card"
+          onClick={() => HandlePlaygroundClick(playground)}
+          > 
+          
+
             <h3>{playground.name}</h3>
 
             {distance && (

@@ -19,6 +19,25 @@ const playGroundApiFacade = {
     },
     
 
+    async getPlaygroundById(id) {
+    try {
+        const response = await fetch(`${API_BASE_URL}playgrounds/${id}`);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch playground with id: ${id}`);
+        }
+
+        const data = await response.json();
+        console.log('Fetched playground:', data);
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching playground:', error);
+        throw error;
+    }
 }
+}
+
+
 
 export default playGroundApiFacade;
