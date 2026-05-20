@@ -15,7 +15,7 @@ export default function Playground(){
   (async () => {
     const playgroundFromServer = await playGroundApiFacade.getPlaygroundById(params.id);
     setPlayground(playgroundFromServer);
-    setFacility(playground.facility)
+    setFacility(playgroundFromServer.facility)
   })();
 },[]);
 
@@ -36,7 +36,7 @@ function FacilityList({ facility }) {
   return (
     <ul>
       {facility.map((fac) => (
-        <li key={fac}>{fac}</li>
+        <li key={fac.id}>{fac.name}</li>
       ))}
     </ul>
   );

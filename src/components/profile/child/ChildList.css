@@ -1,0 +1,107 @@
+/* ChildList.css */
+
+.child-section {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.child-section h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #2d3748;
+}
+
+.child-item {
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  background: #f8fafc;
+
+  transition: all 0.2s ease;
+}
+
+.child-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.child-item label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #475569;
+}
+
+.child-item p {
+  margin: 0;
+  color: #1e293b;
+}
+
+.child-item input {
+  width: 100%;
+  max-width: 250px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  background: white;
+  color: #1e293b;
+
+  box-sizing: border-box;
+
+  transition: all 0.2s ease;
+}
+
+.child-item input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+.child-item button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.child-item button:first-of-type {
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
+}
+
+.child-item button:first-of-type:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(74, 144, 226, 0.3);
+}
+
+.child-item button:last-of-type {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.child-item button:last-of-type:hover {
+  background: #cbd5e1;
+}
+
+.child-item button + button {
+  margin-left: 10px;
+}

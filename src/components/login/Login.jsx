@@ -22,14 +22,19 @@ export default function Login() {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-
+    
     console.log("credentials: ", credentials);
 
     const data = await login(credentials);
 
     console.log(data);
 
+    
     navigate("/");
+  };
+
+  const handleRegisterClick = () => {
+    navigate("/auth/register");
   };
 
   return (
@@ -54,6 +59,7 @@ export default function Login() {
         />
 
         <button type="submit">Login</button>
+        <button type="button" onClick={handleRegisterClick}> Registrer Bruger </button>
       </form>
     </div>
   );

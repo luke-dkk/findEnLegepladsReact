@@ -3,12 +3,12 @@ import './App.css'
 import { Outlet } from 'react-router'
 import playGroundApiFacade from './Api/ApiFacade'
 import PlaygroundList from './components/PlaygroundList'
- 
+import Header from './components/Header/Header.jsx';
 import { useEffect } from 'react'
 function App() {
  // const [count, setCount] = useState(0)
   const [playgrounds, setPlaygrounds] = useState([]);
-
+  const [user, setUser] = useState({email:''});
 
 useEffect(() => {
   (async () => {
@@ -22,6 +22,7 @@ useEffect(() => {
 
   return (
     <>
+     <Header user={user}/>
     <Outlet />
     <PlaygroundList playgrounds={playgrounds}/>
     

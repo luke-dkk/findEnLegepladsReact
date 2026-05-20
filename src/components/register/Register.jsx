@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RegisterUser } from "../../../apiReader.js";
 import { useNavigate } from "react-router";
-
+import "./register.css";
 export default function Register () {
 const navigate = useNavigate();
 const [credentials, setCredentials] = useState({parentName:'', password:'', confirmPassword:'', email:''});
@@ -22,19 +22,54 @@ const handleSubmit = async (evt) => {
 
         navigate("/")
 }
+const handleLoginClick = () => {
+    navigate("/auth/login");
+}
 
 
+    return (
+  <div className="register-container">
+    <form className="register-form" onSubmit={handleSubmit}>
+      <h1>Register</h1>
 
-    return(
-    <>
-    <form onSubmit={handleSubmit}>
-        <input name ="parentName" type="text" value={credentials.parentName} onChange={handleChange} placeholder="skriv dit navn"/>
-        <input name ="password" type="text" value={credentials.password} onChange={handleChange} placeholder="skriv password"/>
-        <input name ="confirmPassword" type="text" value={credentials.confirmPassword} onChange={handleChange} placeholder="Bekraft dit password"/>
-        <input name ="email" type="email" value={credentials.email} onChange={handleChange} placeholder="skriv Email"/>
+      <input
+        name="parentName"
+        type="text"
+        value={credentials.parentName}
+        onChange={handleChange}
+        placeholder="Skriv dit navn"
+      />
 
-        <button type="submit">Register Bruger</button>
+      <input
+        name="password"
+        type="password"
+        value={credentials.password}
+        onChange={handleChange}
+        placeholder="Skriv password"
+      />
+
+      <input
+        name="confirmPassword"
+        type="password"
+        value={credentials.confirmPassword}
+        onChange={handleChange}
+        placeholder="Bekræft dit password"
+      />
+
+      <input
+        name="email"
+        type="email"
+        value={credentials.email}
+        onChange={handleChange}
+        placeholder="Skriv email"
+      />
+
+      <button type="submit">Register Bruger</button>
+
+      <button type="button" onClick={handleLoginClick}>
+        Tilbage til Login
+      </button>
     </form>
-    </>
+  </div>
 );
 }

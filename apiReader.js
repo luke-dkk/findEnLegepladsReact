@@ -1,8 +1,7 @@
-
-const BACKEND_URL = 'http://findenlegeplads.team-ice.dk/api/auth/'
+const BACKEND_URL = 'https://findenlegeplads.team-ice.dk/api'
 
 export async function login(credentials) {
-  const response = await fetch(`${BACKEND_URL}login`, {
+  const response = await fetch(`${BACKEND_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -23,16 +22,20 @@ export async function login(credentials) {
   return data
 }
 
+export async function getUserById(id){
+  // GET requests must not include a body. Use fetchFromServer to include auth headers
+  return await fetchFromServer(`users/${encodeURIComponent(id)}`, { method: 'GET' })
+}
 
 export async function RegisterUser(information){
-    const response = await fetch(`${BACKEND_URL}register`, {
-    method: 'POST',
+    const response = await fetch(`${BACKEND_URL}/auth/register`, 
+      {method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(information),
   })
   
   if(!response.ok){
-    console.log("shit went wrong", response)
+    console.log("couldnt register user", response)
     throw new Error(`Registration failed: ${response.status}`)
     
 

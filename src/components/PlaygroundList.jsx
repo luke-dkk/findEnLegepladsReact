@@ -112,7 +112,20 @@ const [userLocation, setUserLocation] = useState(null);
               View on map
             </a>
           </div>
+          
         );
+        // lav button der viser et lille overlay:
+        //      <button
+        //className="edit-button"
+       // onClick={() => setShowEditOverlay(true)}
+      //>
+       //</div> Edit Profile
+      //</button>
+
+      // <button onClick={() => setShowEditOverlay(false)}>
+        //      Close
+        //    </button>
+
       })}
     </div>
   );

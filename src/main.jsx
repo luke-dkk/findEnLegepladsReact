@@ -6,24 +6,32 @@ import App from './App.jsx'
 import  Login from './components/login/Login'
 import  Register from './components/register/Register.jsx'
 import Playground from './components/playground/Playground.jsx'
+import AuthLayout from './components/auth/AuthLayout.jsx'
+import ProfilePage from './components/profile/ProfilePage.jsx'
 import  {NotFound} from './components/utils/utils.jsx'
 
-
+import ProtectedRoute from './components/utils/ProtectedRoute.jsx';
 createRoot(document.getElementById('root')).render(
    <StrictMode>
     <BrowserRouter>
-      <Routes>
+  <Routes>
 
-        <Route path="/" element={<App />} />
+    {/* Public routes */}
+    <Route path="/auth" element={<AuthLayout />}>
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+    </Route>
 
-        <Route path="/auth">
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          </Route>          
-        <Route path="playground/:id" element={<Playground />} />
-        <Route path="*" element={<NotFound />} />
+    {/* Protected routes */}
+    <Route element={<ProtectedRoute />}>
+  <Route path="/" element={<App />} />
+  <Route path="/playground/:id" element={<Playground />} />
+  <Route path="/profile" element={<ProfilePage />} />
+  </Route>
 
-      </Routes>
-    </BrowserRouter>
+    <Route path="*" element={<NotFound />} />
+
+  </Routes>
+</BrowserRouter>
   </StrictMode>,
 )
