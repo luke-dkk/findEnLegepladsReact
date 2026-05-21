@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { updateChild } from '../../../../apiReader';
 import './ChildList.css';
 
 function ChildList({ user }) {
@@ -20,8 +21,15 @@ function ChildList({ user }) {
     try {
       console.log('Saving child:', child);
 
-      // await updateChild(child.id, child);
+const updatedChild = await updateChild(user.id, child.id, child);
 
+console.log('Updated child:', updatedChild);
+
+setChildren((prevChildren) =>
+  prevChildren.map((c) =>
+    c.id === updatedChild.id ? updatedChild : c
+  )
+);
       setEditingChildId(null);
     } catch (error) {
       console.error('Failed to save child', error);

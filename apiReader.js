@@ -22,6 +22,17 @@ export async function login(credentials) {
   return data
 }
 
+export async function updateChild(userid, id, updatedChildData) {
+
+  return await fetchFromServer(
+    `users/${encodeURIComponent(userid)}/children/${encodeURIComponent(id)}`,
+    {
+      method: 'PUT',
+      body: updatedChildData,
+    }
+  );
+}
+
 export async function getUserById(id){
   // GET requests must not include a body. Use fetchFromServer to include auth headers
   return await fetchFromServer(`users/${encodeURIComponent(id)}`, { method: 'GET' })
