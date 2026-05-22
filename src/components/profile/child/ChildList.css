@@ -70,6 +70,19 @@
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
 }
 
+.add-child-section {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  color:blue;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
 .child-item button {
   padding: 10px 16px;
   border: none;

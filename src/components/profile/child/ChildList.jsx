@@ -1,13 +1,31 @@
 import { useState } from 'react';
-import { updateChild } from '../../../../apiReader';
+import {
+  updateChild,
+  deleteChild,
+  createChild
+} from '../../../../apiReader';
+
 import './ChildList.css';
 
 function ChildList({ user }) {
-  const [children, setChildren] = useState(user.children || []);
 
-  const [editingChildId, setEditingChildId] = useState(null);
+  const [children, setChildren] = useState(
+    user.children || []
+  );
+
+  const [editingChildId, setEditingChildId] =
+    useState(null);
+
+  const [showCreateChild, setShowCreateChild] =
+    useState(false);
+
+  const [newChild, setNewChild] = useState({
+    name: '',
+    age: ''
+  });
 
   const handleChange = (index, field, value) => {
+
     const updatedChildren = children.map((child, i) =>
       i === index
         ? { ...child, [field]: value }
@@ -17,102 +35,295 @@ function ChildList({ user }) {
     setChildren(updatedChildren);
   };
 
-  const handleSave = async (child) => {
+  const handleDelete = async (child) => {
+
     try {
+
+      await deleteChild(user.id, child.id);
+
+      setChildren((prevChildren) =>
+        prevChildren.filter(
+          (c) => c.id !== child.id
+        )
+      );
+
+    } catch (error) {
+
+      console.error(
+        'Failed to delete child',
+        error
+      );
+
+    }
+  };
+
+  const handleSave = async (child) => {
+
+    try {
+
       console.log('Saving child:', child);
 
-const updatedChild = await updateChild(user.id, child.id, child);
+      const updatedChild = await updateChild(
+        user.id,
+        child.id,
+        child
+      );
 
-console.log('Updated child:', updatedChild);
+      console.log(
+        'Updated child:',
+        updatedChild
+      );
 
-setChildren((prevChildren) =>
-  prevChildren.map((c) =>
-    c.id === updatedChild.id ? updatedChild : c
-  )
-);
+      setChildren((prevChildren) =>
+        prevChildren.map((c) =>
+          c.id === updatedChild.id
+            ? updatedChild
+            : c
+        )
+      );
+
       setEditingChildId(null);
+
     } catch (error) {
-      console.error('Failed to save child', error);
+
+      console.error(
+        'Failed to save child',
+        error
+      );
+
+    }
+  };
+
+  const handleCreateChild = async () => {
+
+    try {
+
+      const createdChild = await createChild(
+        user.id,
+        newChild
+      );
+
+      setChildren((prevChildren) => [
+        ...prevChildren,
+        createdChild
+      ]);
+
+      setNewChild({
+        name: '',
+        age: ''
+      });
+
+      setShowCreateChild(false);
+
+    } catch (error) {
+
+      console.error(
+        'Failed to create child',
+        error
+      );
+
     }
   };
 
   return (
+
     <div className="child-section">
+
       <h2>Children</h2>
 
       {children.length > 0 ? (
+
         children.map((child, index) => {
-          const isEditing = editingChildId === child.id;
+
+          const isEditing =
+            editingChildId === child.id;
 
           return (
-            <div className="child-item" key={child.id}>
+
+            <div
+              className="child-item"
+              key={child.id}
+            >
+
               {isEditing ? (
+
                 <>
+
                   <div className="child-field">
+
                     <label>Name:</label>
 
                     <input
                       type="text"
                       value={child.name}
                       onChange={(e) =>
-                        handleChange(index, 'name', e.target.value)
+                        handleChange(
+                          index,
+                          'name',
+                          e.target.value
+                        )
                       }
                     />
+
                   </div>
 
                   <div className="child-field">
+
                     <label>Age:</label>
 
                     <input
                       type="number"
                       value={child.age}
                       onChange={(e) =>
-                        handleChange(index, 'age', e.target.value)
+                        handleChange(
+                          index,
+                          'age',
+                          Number(e.target.value)
+                        )
                       }
                     />
+
                   </div>
 
                   <div className="child-buttons">
-                    <button onClick={() => handleSave(child)}>
+
+                    <button
+                      onClick={() =>
+                        handleSave(child)
+                      }
+                    >
                       Gem
                     </button>
 
-                    <button onClick={() => setEditingChildId(null)}>
+                    <button
+                      onClick={() =>
+                        setEditingChildId(null)
+                      }
+                    >
                       Fortryd
                     </button>
 
-                    <button onClick={() => console.log('Slet barn med navn:', child.name)}>
+                    <button
+                      onClick={() =>
+                        handleDelete(child)
+                      }
+                    >
                       Slet barn
                     </button>
+
                   </div>
+
                 </>
+
               ) : (
+
                 <>
+
                   <div className="child-field">
+
                     <label>Name:</label>
-                    <p>{child.name || 'N/A'}</p>
+
+                    <p>
+                      {child.name || 'N/A'}
+                    </p>
+
                   </div>
 
                   <div className="child-field">
+
                     <label>Age:</label>
-                    <p>{child.age || 'N/A'}</p>
+
+                    <p>
+                      {child.age || 'N/A'}
+                    </p>
+
                   </div>
 
                   <div className="child-buttons">
+
                     <button
-                      onClick={() => setEditingChildId(child.id)}
+                      onClick={() =>
+                        setEditingChildId(child.id)
+                      }
                     >
                       Rediger
                     </button>
+
                   </div>
+
                 </>
+
               )}
+
             </div>
+
           );
         })
+
       ) : (
+
         <p>No children found</p>
+
       )}
+
+      {/* CREATE CHILD */}
+
+      <div className="add-child-section">
+
+        <button
+          onClick={() =>
+            setShowCreateChild(true)
+          }
+        >
+          Tilføj barn
+        </button>
+
+        {showCreateChild && (
+
+          <div className="add-child-form">
+
+            <input
+              type="text"
+              placeholder="Name"
+              value={newChild.name}
+              onChange={(e) =>
+                setNewChild((prev) => ({
+                  ...prev,
+                  name: e.target.value
+                }))
+              }
+            />
+
+            <input
+              type="number"
+              placeholder="Age"
+              value={newChild.age}
+              onChange={(e) =>
+                setNewChild((prev) => ({
+                  ...prev,
+                  age: Number(e.target.value)
+                }))
+              }
+            />
+
+            <button onClick={handleCreateChild}>
+              Gem
+            </button>
+
+            <button
+              onClick={() =>
+                setShowCreateChild(false)
+              }
+            >
+              Fortryd
+            </button>
+
+          </div>
+
+        )}
+
+      </div>
+
     </div>
   );
 }

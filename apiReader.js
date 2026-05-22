@@ -33,6 +33,23 @@ export async function updateChild(userid, id, updatedChildData) {
   );
 }
 
+export async function deleteChild(userid, id) {
+  return await fetchFromServer(
+    `users/${encodeURIComponent(userid)}/children/${encodeURIComponent(id)}`,
+    { method: 'DELETE' }
+  );
+}
+
+export async function createChild(userid, childData) {
+  return await fetchFromServer(
+    `users/${encodeURIComponent(userid)}/children`,
+    {
+      method: 'POST',
+      body: childData,
+    }
+  );
+}
+
 export async function getUserById(id){
   // GET requests must not include a body. Use fetchFromServer to include auth headers
   return await fetchFromServer(`users/${encodeURIComponent(id)}`, { method: 'GET' })
