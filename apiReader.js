@@ -101,6 +101,27 @@ export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMe
 
 }
 
+export async function attachFacilityToPlayground(playgroundId, facilityId) {
+  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/facility/attach`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        facility_id: facilityId,
+        playground_id: playgroundId,
+        }),
+    })
+
+  if (!response.ok) {
+    throw new Error(`Failed to attach facility to playground: ${response.status}`)
+  }
+const data = await response.json()
+console.log('Attached facility to playground:', data)
+return data
+}
+
+
+
 
 
 

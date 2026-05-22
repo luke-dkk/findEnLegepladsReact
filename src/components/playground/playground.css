@@ -1,0 +1,98 @@
+.playground-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  color: var(--text);
+}
+
+.playground-header {
+  margin-bottom: 2rem;
+}
+
+.playground-header h1 {
+  color: var(--text-h);
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.playground-id {
+  color: var(--text);
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+.playground-section {
+  background-color: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+
+  padding: 1.5rem;
+  border-radius: 8px;
+
+  margin-bottom: 1.5rem;
+}
+
+.playground-section h2 {
+  color: var(--text-h);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.facility-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.facility-item {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+
+  font-size: 0.95rem;
+  color: var(--text);
+
+  transition: 0.2s ease;
+}
+
+.facility-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--text-h);
+}
+
+.playground-description {
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.loading {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .playground-container {
+    margin: 1rem;
+    padding: 1.25rem;
+  }
+
+  .playground-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .facility-list {
+    gap: 0.5rem;
+  }
+}

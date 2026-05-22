@@ -18,6 +18,22 @@ const playGroundApiFacade = {
         }
     },
     
+    async getAllFacilities() {
+        try {
+            const response = await fetch(`${API_BASE_URL}facility`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch facilities');
+            }
+            const data = await response.json();
+            console.log('Fetched facilities:', data);
+            return Array.isArray(data) ? data : data.facilities || [];
+        } catch (error) {
+            console.error('Error fetching facilities:', error);
+            throw error;
+        }
+    },
+
+
 
     async getPlaygroundById(id) {
     try {
@@ -36,6 +52,8 @@ const playGroundApiFacade = {
         throw error;
     }
 }
+
+  
 }
 
 
