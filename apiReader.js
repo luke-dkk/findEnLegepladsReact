@@ -78,6 +78,28 @@ export async function RegisterUser(information){
       login(user);
 
 }
+export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMeters, page, size = 10) {
+    const response = await fetch(`${BACKEND_URL}/playgrounds/nearme`,
+    {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            latitude,
+            longitude,
+            radiusInMeters,
+            page,
+            size
+        }),
+    })
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch nearby playgrounds: ${response.status}`)
+    }
+    const data = await response.json()
+    console.log('Fetched nearby playgrounds:', data)
+    return data
+
+}
 
 
 

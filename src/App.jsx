@@ -10,12 +10,12 @@ function App() {
   const [playgrounds, setPlaygrounds] = useState([]);
   const [user, setUser] = useState({email:''});
 
-useEffect(() => {
-  (async () => {
-    const playgroundFromServer = await playGroundApiFacade.getAllPlaygrounds();
-    setPlaygrounds(playgroundFromServer);
-  })();
-},[]);
+// useEffect(() => {
+ // (async () => {
+   // const playgroundFromServer = await playGroundApiFacade.getAllPlaygrounds();
+   // setPlaygrounds(playgroundFromServer);
+  //})();
+// },[]);
 
 
 

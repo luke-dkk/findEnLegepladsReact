@@ -1,11 +1,13 @@
 import './PlaygroundList.css';
 import { useState, useEffect } from 'react';
+import { getPlaygroundsNearLocation} from '../../apiReader';
 import { useNavigate } from 'react-router';
 
 
 function PlaygroundList({playgrounds}) {
 const nav = useNavigate();
 const [userLocation, setUserLocation] = useState(null);
+const [sortedPlaygrounds, setSortedPlaygrounds] = useState(playgrounds);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -21,42 +23,28 @@ const [userLocation, setUserLocation] = useState(null);
     );
   }, []);
 
+useEffect(() => {
 
-    const getDistance = (lat1, lon1, lat2, lon2) => {
-    const toRad = (value) => (value * Math.PI) / 180;
+  if (!userLocation) return;
 
-    const R = 6371; // km
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
-  };
-  
-  const sortedPlaygrounds = userLocation
-    ? [...playgrounds].sort((a, b) => {
-        const distA = getDistance(
+  (async () => {
+    try {
+      const playgroundsFromServer =
+        await getPlaygroundsNearLocation(
           userLocation.lat,
           userLocation.lng,
-          a.latitude,
-          a.longitude
+          2500,
+          0
         );
-        const distB = getDistance(
-          userLocation.lat,
-          userLocation.lng,
-          b.latitude,
-          b.longitude
-        );
-        return distA - distB;
-      })
-    : playgrounds;
+
+      setSortedPlaygrounds(playgroundsFromServer);
+
+    } catch (error) {
+      console.error("Error fetching nearby playgrounds:", error);
+    }
+  })();
+
+}, [userLocation]);
 
 
   function HandlePlaygroundClick(playground){
@@ -64,21 +52,13 @@ const [userLocation, setUserLocation] = useState(null);
     nav(`/playground/${playground.id}`)
   }
 
-  if (!playgrounds || playgrounds.length === 0) {
+  if (!sortedPlaygrounds || sortedPlaygrounds.length === 0) {
     return <h1>Playgrounds are loading</h1>;
   }
 
   return (
     <div className="playgrounds">
       {sortedPlaygrounds.map((playground) => {
-        const distance =
-          userLocation &&
-          getDistance(
-            userLocation.lat,
-            userLocation.lng,
-            playground.latitude,
-            playground.longitude
-          );
 
         return (
           <div 
@@ -88,18 +68,24 @@ const [userLocation, setUserLocation] = useState(null);
           > 
           
 
-            <h3>{playground.name}</h3>
+     <h3>{playground.name}</h3>
 
-            {distance && (
-              <p>
-                {distance.toFixed(2)} km væk
-              </p>
-            )}
-
+{playground.distance < 1000 ? (
+  <p>
+    <strong>Distance:</strong>{" "}
+    {playground.distance.toFixed(0)} m
+  </p>
+) : (
+  <p>
+    <strong>Distance:</strong>{" "}
+    {(playground.distance / 1000).toFixed(2)} km
+  </p>
+)}
             {playground.capacity !== null && (
               <p>
                 <strong>Capacity:</strong> {playground.capacity}
               </p>
+
             )}
 
             <a
