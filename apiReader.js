@@ -22,6 +22,26 @@ export async function login(credentials) {
   return data
 }
 
+export async function attachAndCreateFacility(playgroundId, facilityData) {
+  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/facility/createandattach`, 
+  {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            playground_id: playgroundId,
+            facility_name: facilityData
+        }),
+    })
+
+  if (!response.ok) {
+    throw new Error(`Failed to create and attach facility: ${response.status}`)
+  }
+  const data = await response.json()
+  console.log('Created and attached facility:', data)
+  return data
+}
+
+
 export async function updateChild(userid, id, updatedChildData) {
 
   return await fetchFromServer(
@@ -78,7 +98,7 @@ export async function RegisterUser(information){
       login(user);
 
 }
-export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMeters, page, size = 10) {
+export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMeters, page, size = 15) {
     const response = await fetch(`${BACKEND_URL}/playgrounds/nearme`,
     {
         method: 'POST',

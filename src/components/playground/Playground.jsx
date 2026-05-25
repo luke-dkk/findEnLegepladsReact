@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import playGroundApiFacade from "../../Api/ApiFacade";
-import { attachFacilityToPlayground} from "../../../apiReader";
+import { attachAndCreateFacility} from "../../../apiReader";
 import "./Playground.css";
 
 export default function Playground() {
@@ -73,42 +73,48 @@ export default function Playground() {
   }
 
 async function submitFacility() {
-
   setShowAddFacility(false);
 
-  const selectedFacility =
-    allFacilities.find(
-      fac =>
-        fac.name.toLowerCase() ===
-        searchTerm.toLowerCase()
-    );
+  const normalizedSearch = searchTerm.trim().toLowerCase();
 
-  if (!selectedFacility) {
+  if (!normalizedSearch) {
+    alert("Please select a facility to add.");
     return;
   }
 
-  await attachFacilityToPlayground(
-    params.id,
-    selectedFacility.id
+  const existingFacility = allFacilities.find(
+    fac => fac.name.toLowerCase() === normalizedSearch
   );
 
-  const alreadyExists =
-    facility.some(
-      fac => fac.id === selectedFacility.id
-    );
+  const alreadyAttached = facility.some(
+    fac => fac.name.toLowerCase() === normalizedSearch
+  );
 
-  if (alreadyExists) {
+  if (alreadyAttached) {
+    alert("Facility is already attached to the playground.");
     return;
   }
 
-  setFacility([
-    ...facility,
-    selectedFacility
-  ]);
 
-  setSearchTerm("");
+
+  try {
+const newFacility = await attachAndCreateFacility(
+        playground.id,
+        searchTerm
+      );
+      console.log("Facility attached/created:", newFacility);
+    if (!existingFacility) {
+      setAllFacilities([...allFacilities, newFacility]);
+      setFacility([...facility, newFacility]);
+    } else {
+      setFacility([...facility, existingFacility]);
+    }
+
+    setSearchTerm("");
+  } catch (error) {
+    alert("Failed to add facility., error: " + error.message);
+  }
 }
-
 
 
   const filteredFacilities =
@@ -118,12 +124,10 @@ async function submitFacility() {
         .includes(searchTerm.toLowerCase())
     );
 
-
-
   if (!playground) {
     return (
       <div className="loading">
-        Loading playground...
+        Loader Legepladser
       </div>
     );
   }
@@ -139,7 +143,7 @@ async function submitFacility() {
         <h1>{playground.name}</h1>
 
         <p className="playground-id">
-          Playground ID: {playground.id}
+          Legeplads ID: {playground.id}
         </p>
 
       </div>
@@ -150,7 +154,7 @@ async function submitFacility() {
 
         <div className="facility-header">
 
-          <h2>Facilities</h2>
+          <h2>Faciliteter</h2>
 
           <button
             className="add-facility-button"
@@ -226,8 +230,7 @@ async function submitFacility() {
         <h2>Information</h2>
 
         <p className="playground-description">
-          Here you can find more information
-          about the playground.
+          Her kan du finde informationer om legepladsen.
         </p>
 
       </div>
@@ -242,7 +245,7 @@ async function submitFacility() {
 function FacilityList({ facility }) {
 
   if (!facility || facility.length === 0) {
-    return <p>No facilities registered.</p>;
+    return <p>Ingen faciliteter registreret.</p>;
   }
 
   return (

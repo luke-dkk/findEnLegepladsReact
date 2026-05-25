@@ -2,11 +2,13 @@ import { useState } from "react";
 import { login } from "../../../apiReader.js";
 import { useNavigate } from "react-router";
 import "./Login.css";
+import { useAuth } from "../utils/useAuth";
+
 
 export default function Login() {
 
   const navigate = useNavigate();
-
+  const { setUser } = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -29,7 +31,9 @@ export default function Login() {
 
     console.log(data);
 
-    
+    setUser({
+    email: data.email
+    });
     navigate("/");
   };
 
