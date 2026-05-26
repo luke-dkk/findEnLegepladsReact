@@ -67,8 +67,8 @@ export default function PlaygroundsMap({
         icon={userIcon}
       >
         <Popup>
-          Your location
-        </Popup>
+            Din lokation
+            </Popup>
       </Marker>
 
 
