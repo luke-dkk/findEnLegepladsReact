@@ -1,18 +1,42 @@
 .playgrounds {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   padding: 20px;
 }
 
+.playground-info {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+.playground-links {
+  display: flex;
+  gap: 6px;
+  transform: translateY(-4px); 
+}
+
+
+
+.playground-links svg {
+  transform: translateY(9px); 
+}
+
 /* Card */
 .playground-card {
-  background: #ffffff;
+  background: rgba(152, 175, 245, 0.7);
   border-radius: 12px;
   padding: 16px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 10px;
+  padding-bottom: 20px;
+  color: rgba(147, 167, 229, 0.7);
+}
+
+.playground-card:nth-child(even) {
+  background: rgba(147, 168, 229, 0.992);
 }
 
 /* Hover effect */

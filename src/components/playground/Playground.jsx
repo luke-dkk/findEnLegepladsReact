@@ -2,26 +2,46 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import playGroundApiFacade from "../../Api/ApiFacade";
 import { attachAndCreateFacility} from "../../../apiReader";
+import { checkin } from "../../../apiReader";
 import "./Playground.css";
-
+import { getUserFromToken } from '../utils/utils';
 export default function Playground() {
 
   const params = useParams();
-
+ 
   const [playground, setPlayground] = useState(null);
   const [facility, setFacility] = useState([]);
+  const [user, setUser] = useState(null);
+  const [showAddFacility, setShowAddFacility] = useState(false);
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  const [ListOfChilrenCheckIn, setListOfChildrenCheckIn] = useState([]);
+  const [allFacilities, setAllFacilities] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [showAddFacility, setShowAddFacility] =
-    useState(false);
 
-  const [allFacilities, setAllFacilities] =
-    useState([]);
+useEffect(() => {
+    let mounted = true;
 
-  const [searchTerm, setSearchTerm] =
-    useState("");
+    async function load() {
+      const userData = await getUserFromToken();
+      console.log('User data from token:', userData);
+      if (!mounted) return;
+      
+      setUser(userData);
+     
+    }
 
+    load();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+
+
+  
   useEffect(() => {
-
     (async () => {
 
       const playgroundFromServer =
@@ -39,6 +59,9 @@ export default function Playground() {
   }, [params.id]);
 
 
+  async function handleShowCheckIn() {
+    setShowCheckIn(true);
+  }
 
   async function handleOpenFacilityMenu() {
 
@@ -62,6 +85,7 @@ export default function Playground() {
     }
   }
 
+  
 
 
   function handleCloseFacilityMenu() {
@@ -164,9 +188,6 @@ const newFacility = await attachAndCreateFacility(
           </button>
 
         </div>
-
-
-
         <FacilityList facility={facility} />
 
 
@@ -224,6 +245,15 @@ const newFacility = await attachAndCreateFacility(
       </div>
 
 
+      <div className="Children-section">
+        <button className="check-in" onClick={handleShowCheckIn}>Check ind</button>
+
+        {showCheckIn && (
+                    < ChildList user={user} />
+
+          )}
+       </div>
+
 
       <div className="playground-section">
 
@@ -237,8 +267,10 @@ const newFacility = await attachAndCreateFacility(
 
     </div>
 
+
+
   );
-}
+
 
 
 
@@ -267,3 +299,60 @@ function FacilityList({ facility }) {
 
   );
 }
+function ChildList({ user }) {
+
+  if (!user.children || user.children.length === 0) {
+    return <p>Ingen børn registreret.</p>;
+  }
+
+  function handleChildClick(child) {
+    setListOfChildrenCheckIn(prev =>
+      prev.some(c => c.id === child.id)
+        ? prev.filter(c => c.id !== child.id)
+        : [...prev, child]
+    );
+    console.log("Selected children for check-in:", ListOfChilrenCheckIn);
+  }
+
+  async function submitCheckIn() {
+    if (ListOfChilrenCheckIn.length === 0) {
+      alert("Vælg mindst ét barn for at checke ind.");
+      return;
+    }
+
+const childIds =
+  ListOfChilrenCheckIn.map(
+    child => child.id
+  );
+
+const response = await checkin(
+  playground.id,
+  user.id,
+  childIds
+);
+ console.log("Check-in response:", response);
+  }
+  return (
+    <>
+    <ul className="child-list">
+      {user.children.map((child) => {
+
+        const isSelected =
+          ListOfChilrenCheckIn.some(c => c.id === child.id);
+
+        return (
+          <li
+            key={child.id}
+            className={`child-item ${isSelected ? 'selected' : ''}`}
+            onClick={() => handleChildClick(child)}
+            
+          >
+            {child.name}
+          </li>
+        );
+      })}
+    </ul>
+    <button className="check-in-button" onClick={submitCheckIn}>Check ind</button>
+    </>
+  );
+}}

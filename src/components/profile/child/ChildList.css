@@ -118,3 +118,8 @@
 .child-item button + button {
   margin-left: 10px;
 }
+
+.child-item.selected {
+  background: rgb(49, 158, 247) !important;
+  color: white !important;
+}

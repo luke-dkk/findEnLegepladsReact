@@ -33,32 +33,31 @@ export default function ProfilePage() {
   }, [navigate]);
 
   if (loading) {
-    return <div className="profile-container">Loading...</div>;
+    return <div className="profile-container">Indhenter information...</div>;
   }
 
 
 return (
   <div className="profile-container">
-    <h1>Profile</h1>
+    <h1>Profil</h1>
 
     <div className="profile-info">
 
-      {/* USER INFO */}
+      
       <div className="info-section">
-        <h2>User Information</h2>
+        <h2>Dine oplysninger</h2>
 
         <div className="info-item">
-          <label>Email:</label>
+          <label>E-mail:</label>
           <p>{user.email || 'N/A'}</p>
         </div>
 
         <div className="info-item">
-          <label>User ID:</label>
+          <label>Bruger-ID:</label>
           <p>{user.id || 'N/A'}</p>
         </div>
       </div>
 
-      {/* CHILDREN */}
       <ChildList user={user} />
 
     </div>

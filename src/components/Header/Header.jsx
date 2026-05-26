@@ -41,7 +41,7 @@
                   className="top-menu__button"
                   onClick={handleLogout}
                   >
-                  logout
+                  Log af
                   </button>
               </li>
             </ul>

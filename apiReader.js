@@ -22,6 +22,35 @@ export async function login(credentials) {
   return data
 }
 
+export async function checkin(playgroundId, parentId, childrenId) {
+  const token = localStorage.getItem("jwtToken");
+
+  console.log({
+  playgroundId,
+  parentId,
+  childrenId,
+  token
+});
+  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${token}`
+     },
+    body: JSON.stringify({
+      user_id: parentId,
+      child_ids: childrenId
+    }),
+  })
+
+
+if (!response.ok) {
+  throw new Error(`Check-in failed: ${response.status}`)
+}
+const data = await response.json()
+console.log('Check-in successful:', data)
+return data
+}
+
 export async function attachAndCreateFacility(playgroundId, facilityData) {
   const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/facility/createandattach`, 
   {
@@ -207,3 +236,5 @@ export async function fetchFromServer(url, options = {}) {
 export function logout() {
   localStorage.removeItem('jwtToken')
 }
+
+
