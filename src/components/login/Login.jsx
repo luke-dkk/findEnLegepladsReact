@@ -3,7 +3,7 @@ import { login } from "../../../apiReader.js";
 import { useNavigate } from "react-router";
 import "./Login.css";
 import { useAuth } from "../utils/useAuth";
-
+import playgroundPhoto from "../../../public/findenlegepladsPhoto.jpg";
 
 export default function Login() {
 
@@ -42,29 +42,44 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h1>Login</h1>
+    <div className="login-page">
+  <div className="login-container">
+    <form className="login-form" onSubmit={handleSubmit}>
 
-        <input
-          name="email"
-          type="email"
-          value={credentials.email}
-          onChange={handleChange}
-          placeholder="Enter email"
-        />
+      <img
+        className="login-image"
+        src={playgroundPhoto}
+        alt="Playground"
+      />
 
-        <input
-          name="password"
-          type="password"
-          value={credentials.password}
-          onChange={handleChange}
-          placeholder="Enter password"
-        />
+      <input
+        name="email"
+        type="email"
+        value={credentials.email}
+        onChange={handleChange}
+        placeholder="Brugernavn"
+      />
 
-        <button type="submit">Login</button>
-        <button type="button" onClick={handleRegisterClick}> Registrer Bruger </button>
-      </form>
-    </div>
+      <input
+        name="password"
+        type="password"
+        value={credentials.password}
+        onChange={handleChange}
+        placeholder="Kodeord"
+      />
+
+      <button type="submit">Login</button>
+
+      <button
+        className="register-link"
+        type="button"
+        onClick={handleRegisterClick}
+      >
+        Ny bruger? klik her
+      </button>
+
+    </form>
+  </div>
+</div>
   );
 }

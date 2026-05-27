@@ -1,54 +1,123 @@
+:root {
+  --accent: #55744f;
+  --accent-hover: #445d40;
+
+  --text-primary: #243244;
+  --text-secondary: #556273;
+
+  --card: rgba(255, 255, 255, 0.75);
+
+  --shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
 .top-menu {
-	width: 100%;
-	border-bottom: 1px solid var(--border);
+  width: min(1000px, 94%);
+  margin: 1rem auto;
+
+  background: var(--card);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 999px;
+
+  box-shadow: var(--shadow);
 }
 
 .top-menu__nav {
-	width: 100%;
+  width: 100%;
 }
 
 .top-menu__list {
-	width: 100%;
-	list-style: none;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 6px;
-	margin: 0;
-	padding: 0 14px;
-	box-sizing: border-box;
+  list-style: none;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin: 0;
+  padding: 0.75rem 1rem;
 }
 
 .top-menu__item {
-	margin: 0;
+  margin: 0;
 }
 
 .top-menu__link {
-	display: inline-block;
-	text-decoration: none;
-	color: var();
-	padding: 14px 12px;
-	border-bottom: 2px solid transparent;
-	font-weight: 500;
-	transition: border-color 0.2s ease, color 0.2s ease;
+  display: inline-block;
+
+  text-decoration: none;
+
+  color: var(--text-primary);
+
+  padding: 0.75rem 1rem;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .top-menu__link:hover {
-	color: var(--accent);
+  background: rgba(85, 116, 79, 0.1);
+  color: var(--accent);
 }
 
 .top-menu__link--active {
-	color: var(--accent);
-	border-bottom-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+.top-menu__button {
+  border: none;
+
+  background: #d96b6b;
+  color: white;
+
+  padding: 0.7rem 1rem;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.top-menu__button:hover {
+  background: #c85a5a;
+  transform: translateY(-1px);
+}
+
+/* Push email + logout to the right */
+.top-menu__list > li:nth-last-child(2) {
+  margin-left: auto;
+
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 @media (max-width: 640px) {
-	.top-menu__list {
-		flex-wrap: wrap;
-		row-gap: 0;
-	}
+  .top-menu {
+    width: calc(100% - 1rem);
+    border-radius: 20px;
+  }
 
-	.top-menu__link {
-		padding: 12px 10px;
-	}
+  .top-menu__list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .top-menu__list > li:nth-last-child(2) {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }

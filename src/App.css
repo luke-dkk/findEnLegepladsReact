@@ -16,6 +16,9 @@
     outline-offset: 2px;
   }
 }
+body {
+  background-color: #0047d4;
+}
 
 .hero {
   position: relative;

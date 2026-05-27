@@ -37,7 +37,7 @@ export default function PlaygroundsMap({
   }
 
   return (
-
+<div className="map-module">
     <MapContainer
       center={[
         userLocation.lat,
@@ -112,6 +112,6 @@ export default function PlaygroundsMap({
       ))}
 
     </MapContainer>
-
+</div>
   );
 }

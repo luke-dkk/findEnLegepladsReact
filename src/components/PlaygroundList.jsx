@@ -183,8 +183,7 @@ function PlaygroundList({ playgrounds }) {
 
 
   return (
-
-    <>
+    <div className="playground-list-container">
 
       <PlaygroundsMap
         userLocation={userLocation}
@@ -197,7 +196,7 @@ function PlaygroundList({ playgrounds }) {
 
       <div className="load-more-container">
 
-        <button
+        <button className="load-more-button"
           className="load-more-button"
           onClick={handleLoadMore}
           disabled={loadingMore}
@@ -229,7 +228,7 @@ function PlaygroundList({ playgrounds }) {
                   )
                 }
               >
-                <div classnName="playground-name">
+                <div className="playground-name">
                 <h3>
                   {playground.name}
                 </h3>
@@ -288,9 +287,7 @@ function PlaygroundList({ playgrounds }) {
         )}
 
       </div>
-
-    </>
-
+    </div>
   );
 }
 

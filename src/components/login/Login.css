@@ -1,26 +1,41 @@
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f7fb;
+  font-family: Georgia, serif;
 }
 
-.login-container {
-  height: 100vh;
+.login-page {
+  min-height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background:
+    radial-gradient(
+      circle at bottom center,
+      rgba(255,255,255,0.4) 0%,
+      transparent 40%
+    ),
+    linear-gradient(
+      to bottom,
+      #e5d193 0%,
+      #f3e6b5 35%,
+      #d9ecff 75%,
+      #c7e4ff 100%
+    );
 }
 
-.login-form {
-  background: white;
-  padding: 40px;
-  width: 320px;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+.login-container {
+  width: 100%;
+  max-width: 400px;
+}
 
+
+.login-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  align-items: center;
+  gap: 28px;
 }
 
 .login-form h1 {
@@ -30,35 +45,87 @@ body {
 }
 
 .login-form input {
-  padding: 12px;
-  border: 1px solid #d0d7e2;
-  border-radius: 8px;
-  font-size: 16px;
+  width: 260px;
 
-  transition: border 0.2s ease;
+  padding: 18px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  background: #95a7e5;
+
+  color: #243244;
+
+  font-size: 1.2rem;
+  text-align: center;
+
+  box-shadow:
+    0 6px 12px rgba(0,0,0,0.15);
+}
+
+.login-form input::placeholder {
+  color: #243244;
+}
+
+.login-form input::placeholder {
+  color: white;
+  opacity: 1;
 }
 
 .login-form input:focus {
   outline: none;
   border-color: #4a90e2;
 }
+.register-link {
+  background: none !important;
+  box-shadow: none !important;
 
-.login-form button {
-  padding: 12px;
+  width: auto !important;
+  height: auto !important;
+
+  color: #95a7e5 !important;
+
+  font-size: 1.8rem;
+
+  padding: 0;
   border: none;
-  border-radius: 8px;
+  cursor: pointer;
+}
 
-  background: #4a90e2;
-  color: white;
+.login-form button[type="submit"] {
+  width: 120px;
+  height: 60px;
 
-  font-size: 16px;
-  font-weight: bold;
+  border: none;
+
+  border-radius: 999px;
+
+  background: #8ecfb0;
+
+  color: #243244;
+
+  font-size: 1.3rem;
+  font-weight: 500;
 
   cursor: pointer;
 
-  transition: background 0.2s ease;
+  box-shadow:
+    0 6px 12px rgba(0,0,0,0.15);
 }
 
 .login-form button:hover {
   background: #357abd;
+}
+
+.login-image {
+  width: 280px;
+  height: 170px;
+
+  object-fit: cover;
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.15);
 }

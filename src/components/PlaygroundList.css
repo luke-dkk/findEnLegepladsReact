@@ -1,76 +1,174 @@
+:root {
+  --bg-sand: #e5d193;
+  --bg-sand-light: #f3e6b5;
+
+  --card: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(255, 255, 255, 0.45);
+
+  --text-primary: #243244;
+  --text-secondary: #556273;
+
+  --accent: #55744f;
+  --accent-hover: #445d40;
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.playground-list-container {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at bottom center,
+      rgba(255, 255, 255, 0.4) 0%,
+      transparent 40%
+    ),
+    linear-gradient(
+      to bottom,
+      #e5d193 0%,
+      #f3e6b5 35%,
+      #d9ecff 75%,
+      #c7e4ff 100%
+    );
+
+  padding-bottom: 3rem;
+}
+
 .playgrounds {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 1rem;
+
+  width: min(900px, 92%);
+  margin: 0 auto;
+
+  padding-bottom: 2rem;
+}
+
+.playground-card {
+  background: var(--card);
+
+  border: 1px solid var(--card-border);
+
+  border-radius: 20px;
+
+  padding: 1.2rem;
+
+  box-shadow: var(--shadow);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  cursor: pointer;
+}
+
+.playground-card:nth-child(even) {
+  background: rgba(218, 174, 92, 0.8);
+}
+
+.playground-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.1);
+}
+
+.playground-card h3 {
+  margin: 0 0 1rem 0;
+
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+
+.playground-card p {
+  margin: 0;
+  color: var(--text-secondary);
 }
 
 .playground-info {
   display: flex;
-  gap: 8px;
   justify-content: space-between;
+  align-items: center;
+
+  gap: 1rem;
 }
+
 .playground-links {
   display: flex;
-  gap: 6px;
-  transform: translateY(-4px); 
+  align-items: center;
+  gap: 0.4rem;
 }
 
-
-
-.playground-links svg {
-  transform: translateY(9px); 
-}
-
-/* Card */
-.playground-card {
-  background: rgba(152, 175, 245, 0.7);
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  gap: 10px;
-  padding-bottom: 20px;
-  color: rgba(147, 167, 229, 0.7);
-}
-
-.playground-card:nth-child(even) {
-  background: rgba(147, 168, 229, 0.992);
-}
-
-/* Hover effect */
-.playground-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Title */
-.playground-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
-  color: #1f2933;
-}
-
-/* Text */
-.playground-card p {
-  font-size: 0.9rem;
-  margin: 6px 0;
-  color: #4b5563;
-}
-
-/* Map link */
-.playground-card a {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 0.85rem;
+.playground-links a {
   text-decoration: none;
-  color: #2563eb;
-  font-weight: 500;
+
+  color: var(--accent);
+
+  font-weight: 600;
+
   transition: color 0.2s ease;
 }
 
-.playground-card a:hover {
-  color: #1d4ed8;
+.playground-links a:hover {
   text-decoration: underline;
+  color: var(--accent-hover);
+}
+
+.playground-links svg {
+  transform: none;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+
+  margin: 1.5rem 0 2rem;
+}
+
+.load-more-button {
+  border: none;
+
+  background: var(--accent);
+  color: white;
+
+  padding: 14px 24px;
+
+  border-radius: 999px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.load-more-button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.map-module {
+  width: min(900px, 92%);
+  margin: 2rem auto;
+
+  overflow: hidden;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  box-shadow: var(--shadow);
+}
+
+.playground-map {
+  height: 400px;
+  width: 100%;
 }
