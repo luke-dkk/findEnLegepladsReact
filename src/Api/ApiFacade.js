@@ -51,11 +51,23 @@ const playGroundApiFacade = {
         console.error('Error fetching playground:', error);
         throw error;
     }
+  },
+
+
+    async checkIfCheckedIn(id) {
+        try {
+            const response = await fetch(`${API_BASE_URL}checkin/${id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch check-in status');
+            }
+            const data = await response.json();
+            console.log('Fetched check-in status:', data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching check-in status:', error);
+            throw error;
+        }
+        
+    }
 }
-
-  
-}
-
-
-
 export default playGroundApiFacade;

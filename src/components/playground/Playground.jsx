@@ -324,14 +324,25 @@ const childIds =
   ListOfChilrenCheckIn.map(
     child => child.id
   );
-
+ try {
 const response = await checkin(
   playground.id,
   user.id,
   childIds
 );
  console.log("Check-in response:", response);
+
+   alert("Check-in lykkedes!");
+   setListOfChildrenCheckIn([]);
+   console.log("Check-in successful, cleared selected children." + response.message);
+   console.log("Current selected children after clearing:", ListOfChilrenCheckIn);
+ } catch (error) {
+  alert(error.message);
+  console.error(error);
+}
   }
+
+
   return (
     <>
     <ul className="child-list">

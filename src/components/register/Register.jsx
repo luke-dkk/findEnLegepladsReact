@@ -13,12 +13,11 @@ const handleChange = (evt) => {
 const handleSubmit = async (evt) => {
     evt.preventDefault();
         if (credentials.password !== credentials.confirmPassword){
-            console.log("passwords do not match")
+            alert("Dine passwords matcher ikke, prøv igen");
             return
         }
         console.log('credentials: ', credentials);
         const data = await RegisterUser(credentials);
-        console.log(data);
 
         navigate("/")
 }
@@ -28,6 +27,7 @@ const handleLoginClick = () => {
 
 
     return (
+  <div className="register-page">
   <div className="register-container">
     <form className="register-form" onSubmit={handleSubmit}>
       <h1>Register</h1>
@@ -64,12 +64,13 @@ const handleLoginClick = () => {
         placeholder="Skriv email"
       />
 
-      <button type="submit">Register Bruger</button>
+      <button type="submit">Register</button>
 
       <button type="button" onClick={handleLoginClick}>
         Tilbage til Login
       </button>
     </form>
+  </div>
   </div>
 );
 }

@@ -12,8 +12,14 @@
   import 'leaflet/dist/leaflet.css';
   import { MainLayout } from './components/mainLayout/MainLayout.jsx'
   import { AuthProvider } from './components/utils/AuthContext.jsx'
-
   import ProtectedRoute from './components/utils/ProtectedRoute.jsx';
+
+//TODO: Add error handling for login and register forms.
+//{
+//TODO: add a "How many is checked in" counter to the playground page.
+//TODO: create "active checkins" list.
+//}
+
   createRoot(document.getElementById('root')).render(
     <StrictMode>
       <AuthProvider>

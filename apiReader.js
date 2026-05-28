@@ -22,33 +22,57 @@ export async function login(credentials) {
   return data
 }
 
-export async function checkin(playgroundId, parentId, childrenId) {
+export async function checkoutAll(parentId) {
   const token = localStorage.getItem("jwtToken");
+  const response = await fetch(`${BACKEND_URL}/checkoutall`, {
+    
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ user_id: parentId }),
+  })
+  if (!response.ok) {
+    throw new Error(`Checkout failed: ${response.status}`)
+  }
+  const data = await response.json()
+  console.log('Checkout successful:', data)
+  return data
+}
 
-  console.log({
+
+export async function checkin(
   playgroundId,
   parentId,
-  childrenId,
-  token
-});
-  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${token}`
-     },
-    body: JSON.stringify({
-      user_id: parentId,
-      child_ids: childrenId
-    }),
-  })
+  childrenId
+) {
+  const token = localStorage.getItem("jwtToken");
 
+  const response = await fetch(
+    `${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        user_id: parentId,
+        child_ids: childrenId
+      }),
+    }
+  );
 
-if (!response.ok) {
-  throw new Error(`Check-in failed: ${response.status}`)
-}
-const data = await response.json()
-console.log('Check-in successful:', data)
-return data
+  if (!response.ok) {
+
+    const errorData = await response.json();
+
+    throw new Error(
+      errorData.message || "Check-in failed"
+    );
+  }
+
+  return await response.json();
 }
 
 export async function attachAndCreateFacility(playgroundId, facilityData) {
@@ -85,7 +109,11 @@ export async function updateChild(userid, id, updatedChildData) {
 export async function deleteChild(userid, id) {
   return await fetchFromServer(
     `users/${encodeURIComponent(userid)}/children/${encodeURIComponent(id)}`,
-    { method: 'DELETE' }
+    { method: 'DELETE',
+      headers: { 'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+       },
+     }
   );
 }
 

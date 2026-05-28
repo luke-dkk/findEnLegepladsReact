@@ -57,7 +57,7 @@ export default function Login() {
         type="email"
         value={credentials.email}
         onChange={handleChange}
-        placeholder="Brugernavn"
+        placeholder="Email"
       />
 
       <input

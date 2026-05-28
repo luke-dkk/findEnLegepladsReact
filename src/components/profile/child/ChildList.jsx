@@ -2,7 +2,8 @@ import { useState } from 'react';
 import {
   updateChild,
   deleteChild,
-  createChild
+  createChild,
+  checkoutAll
 } from '../../../../apiReader';
 
 import './ChildList.css';
@@ -48,6 +49,7 @@ function ChildList({ user }) {
       );
 
     } catch (error) {
+        alert('Kunne ikke slette barnet')
 
       console.error(
         'Failed to delete child',
@@ -85,7 +87,7 @@ function ChildList({ user }) {
       setEditingChildId(null);
 
     } catch (error) {
-
+      alert('Kunne ikke gemme barnet')
       console.error(
         'Failed to save child',
         error
@@ -116,6 +118,7 @@ function ChildList({ user }) {
       setShowCreateChild(false);
 
     } catch (error) {
+      alert('Kunne ikke oprette barnet')
 
       console.error(
         'Failed to create child',
@@ -125,6 +128,23 @@ function ChildList({ user }) {
     }
   };
 
+  const checkOutChildren = async (evt) => {
+         evt.preventDefault();
+    
+    try {
+      await checkoutAll(user.id);
+      alert('Alle børn er tjekket ud');
+
+    }
+    catch (error) {
+      alert('Kunne ikke tjekke børn ud')
+      console.error(
+        'Kunne ikke tjekke børn ud',
+        error
+      );
+    }
+  }
+  
   return (
 
     <div className="child-section">
@@ -323,6 +343,7 @@ function ChildList({ user }) {
         )}
 
       </div>
+        <button onClick={checkOutChildren}>check alle ud</button> 
 
     </div>
   );

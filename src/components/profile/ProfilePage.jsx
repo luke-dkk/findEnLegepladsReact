@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { getUserFromToken } from '../utils/utils';
 import ChildList from './child/ChildList.jsx';
+import CheckIn from './checkin/CheckIn.jsx';
 import './profile.css';
 
 export default function ProfilePage() {
@@ -38,6 +39,7 @@ export default function ProfilePage() {
 
 
 return (
+  <div className="profile-page">
   <div className="profile-container">
     <h1>Profil</h1>
 
@@ -58,9 +60,11 @@ return (
         </div>
       </div>
 
+      
       <ChildList user={user} />
-
+      <CheckIn user={user} />
     </div>
+  </div>
   </div>
 );
 }

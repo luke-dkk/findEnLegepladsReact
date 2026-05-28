@@ -37,6 +37,9 @@ function PlaygroundList({ playgrounds }) {
       },
 
       (error) => {
+        alert(
+          "Kunne ikke hente din lokation. Sørg for at du har givet tilladelse til at dele din lokation, og prøv igen."
+        );
         console.error(
           "Error getting location:",
           error
