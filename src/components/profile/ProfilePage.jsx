@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
 
   const [loading, setLoading] = useState(true);
-
+  const [checkInRefresh, setCheckInRefresh] = useState(0);
   useEffect(() => {
     let mounted = true;
 
@@ -55,14 +55,23 @@ return (
         </div>
 
         <div className="info-item">
-          <label>Bruger-ID:</label>
-          <p>{user.id || 'N/A'}</p>
+          <label>Navn:</label>
+          <p>{user.name || 'N/A'}</p>
         </div>
       </div>
 
       
-      <ChildList user={user} />
-      <CheckIn user={user} />
+      <ChildList
+  user={user}
+  onCheckout={() =>
+    setCheckInRefresh(prev => prev + 1)
+  }
+/>
+
+<CheckIn
+  user={user}
+  refresh={checkInRefresh}
+/>
     </div>
   </div>
   </div>

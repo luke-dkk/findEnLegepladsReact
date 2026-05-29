@@ -16,8 +16,8 @@
 
 //TODO: Add error handling for login and register forms.
 //{
-//TODO: add a "How many is checked in" counter to the playground page.
-//TODO: create "active checkins" list.
+//TODO: fix backend response on curently cheked to get a playground name.
+
 //}
 
   createRoot(document.getElementById('root')).render(

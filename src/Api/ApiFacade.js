@@ -54,20 +54,32 @@ const playGroundApiFacade = {
   },
 
 
-    async checkIfCheckedIn(id) {
-        try {
-            const response = await fetch(`${API_BASE_URL}checkin/${id}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch check-in status');
-            }
-            const data = await response.json();
-            console.log('Fetched check-in status:', data);
-            return data;
-        } catch (error) {
-            console.error('Error fetching check-in status:', error);
-            throw error;
+   async getActiveCheckIns(userId) {
+  try {
+    const token = localStorage.getItem("jwtToken");
+
+    const response = await fetch(
+      `${API_BASE_URL}checkin/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-        
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch check-in status: ${response.status}`);
     }
+
+    const data = await response.json();
+    console.log("Fetched check-in status:", data);
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching check-in status:", error);
+    throw error;
+  }
+}
 }
 export default playGroundApiFacade;

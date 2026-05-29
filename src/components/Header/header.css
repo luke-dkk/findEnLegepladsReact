@@ -10,7 +10,15 @@
   --shadow:
     0 8px 24px rgba(0, 0, 0, 0.08);
 }
-
+.header-root{
+  background:
+    linear-gradient(
+      to bottom,
+      #f3e2ae,
+      #e5d193
+    );
+    border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
 .top-menu {
   width: min(1000px, 94%);
   margin: 1rem auto;

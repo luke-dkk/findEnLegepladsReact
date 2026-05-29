@@ -159,7 +159,7 @@ const newFacility = await attachAndCreateFacility(
 
 
   return (
-
+<div className="playground-page">
     <div className="playground-container">
 
       <div className="playground-header">
@@ -266,7 +266,7 @@ const newFacility = await attachAndCreateFacility(
       </div>
 
     </div>
-
+</div>
 
 
   );
@@ -314,34 +314,36 @@ function ChildList({ user }) {
     console.log("Selected children for check-in:", ListOfChilrenCheckIn);
   }
 
-  async function submitCheckIn() {
-    if (ListOfChilrenCheckIn.length === 0) {
-      alert("Vælg mindst ét barn for at checke ind.");
-      return;
-    }
-
-const childIds =
-  ListOfChilrenCheckIn.map(
-    child => child.id
-  );
- try {
-const response = await checkin(
-  playground.id,
-  user.id,
-  childIds
-);
- console.log("Check-in response:", response);
-
-   alert("Check-in lykkedes!");
-   setListOfChildrenCheckIn([]);
-   console.log("Check-in successful, cleared selected children." + response.message);
-   console.log("Current selected children after clearing:", ListOfChilrenCheckIn);
- } catch (error) {
-  alert(error.message);
-  console.error(error);
-}
+async function submitCheckIn() {
+  if (ListOfChilrenCheckIn.length === 0) {
+    alert("Vælg mindst ét barn for at checke ind.");
+    return;
   }
+  const childIds = ListOfChilrenCheckIn.map(
+    (child) => child.id
+  );
 
+  try {
+    const response = await checkin(
+      playground.id,
+      user.id,
+      childIds
+    );
+
+    console.log("Check-in response:", response);
+
+    alert("Check-in lykkedes!");
+    setListOfChildrenCheckIn([]);
+
+    console.log(
+      "Check-in successful, cleared selected children.",
+      response.message
+    );
+  } catch (error) {
+    alert(error.message);
+    console.error(error);
+  }
+}
 
   return (
     <>
@@ -363,7 +365,8 @@ const response = await checkin(
         );
       })}
     </ul>
-    <button className="check-in-button" onClick={submitCheckIn}>Check ind</button>
+    <button className="check-in-button" onClick={submitCheckIn}>Godkend check ind</button>
+    <button className="cancel-button" onClick={() => setShowCheckIn(false)}>Fortryd</button>
     </>
   );
 }}

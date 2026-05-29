@@ -188,6 +188,9 @@ function PlaygroundList({ playgrounds }) {
   return (
     <div className="playground-list-container">
 
+          <h1 className="playground-list-title"> Find en Legeplads </h1>
+
+  <p className="playground-list-subtitle"> Opdag legepladser nær dig og se hvor andre børn leger </p>
       <PlaygroundsMap
         userLocation={userLocation}
         playgrounds={sortedPlaygrounds}

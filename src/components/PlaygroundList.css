@@ -172,3 +172,16 @@
   height: 400px;
   width: 100%;
 }
+
+.playground-list-title {
+  text-align: center;
+
+  margin: 2rem auto 1.5rem;
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+
+  color: var(--text-primary);
+
+  letter-spacing: -1px;
+}

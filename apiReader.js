@@ -44,27 +44,29 @@ export async function checkoutAll(parentId) {
 export async function checkin(
   playgroundId,
   parentId,
-  childrenId
+  children
 ) {
   const token = localStorage.getItem("jwtToken");
 
   const response = await fetch(
     `${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`,
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
+        playground_id: playgroundId,
         user_id: parentId,
-        child_ids: childrenId
+        children: children.map((id) => ({
+          id: id,
+        })),
       }),
     }
   );
 
   if (!response.ok) {
-
     const errorData = await response.json();
 
     throw new Error(

@@ -1,125 +1,217 @@
 /* ChildList.css */
+.child-item::before {
+ 
 
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.8);
+
+  font-size: 1.5rem;
+}
 .child-section {
-  background: white;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+
   padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+
+  border-radius: 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .child-section h2 {
   margin-top: 0;
   margin-bottom: 24px;
-  color: #2d3748;
+
+  color: var(--text-primary);
+  font-size: 1.5rem;
 }
 
+/* Child card */
+
 .child-item {
-  padding: 18px;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  padding: 20px;
+
+  border-radius: 20px;
+
   margin-bottom: 16px;
 
   display: flex;
   flex-direction: column;
   gap: 14px;
 
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.55);
 
-  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .child-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.08);
 }
 
-.child-item label {
+/* Fields */
+
+.child-field label {
   display: block;
-  font-weight: bold;
+
+  font-weight: 600;
+
   margin-bottom: 6px;
-  color: #475569;
+
+  color: var(--text-secondary);
 }
 
-.child-item p {
+.child-field p {
   margin: 0;
-  color: #1e293b;
+
+  font-size: 1rem;
+
+  color: var(--text-primary);
 }
 
-.child-item input {
+/* Inputs */
+
+.child-item input,
+.add-child-form input {
   width: 100%;
-  max-width: 250px;
+  max-width: 260px;
 
-  padding: 10px 12px;
+  padding: 12px 14px;
 
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  background: rgba(255, 255, 255, 0.85);
 
   font-size: 15px;
 
-  background: white;
-  color: #1e293b;
-
-  box-sizing: border-box;
+  color: var(--text-primary);
 
   transition: all 0.2s ease;
 }
 
-.child-item input:focus {
+.child-item input:focus,
+.add-child-form input:focus {
   outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+
+  border-color: var(--accent);
+
+  box-shadow:
+    0 0 0 4px rgba(85, 116, 79, 0.15);
 }
+
+/* Buttons */
+
+.child-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.child-buttons button,
+.add-child-form button,
+.add-child-section button,
+.checkout-button {
+  border: none;
+
+  background: var(--accent);
+
+  color: white;
+
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.child-buttons button:hover,
+.add-child-form button:hover,
+.add-child-section button:hover,
+.checkout-button:hover {
+  background: var(--accent-hover);
+
+  transform: translateY(-2px);
+}
+
+/* Cancel button */
+
+.child-buttons button:nth-child(2),
+.add-child-form button:last-child {
+  background: #9aa5af;
+}
+
+.child-buttons button:nth-child(2):hover,
+.add-child-form button:last-child:hover {
+  background: #7d8790;
+}
+
+/* Delete button */
+
+.child-buttons button:last-child {
+  background: #d86b6b;
+}
+
+.child-buttons button:last-child:hover {
+  background: #c65454;
+}
+
+/* Add child area */
 
 .add-child-section {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
-  color:blue;
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: all 0.2s ease;
+  margin-top: 1.5rem;
 }
 
-.child-item button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 10px;
+.add-child-form {
+  margin-top: 1rem;
 
-  font-size: 14px;
-  font-weight: 600;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 
-  cursor: pointer;
+  padding: 18px;
 
-  transition: all 0.2s ease;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.child-item button:first-of-type {
-  background: linear-gradient(135deg, #4a90e2, #357abd);
-  color: white;
+/* Checkout all */
+
+.checkout-button {
+  margin-top: 1.5rem;
 }
 
-.child-item button:first-of-type:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(74, 144, 226, 0.3);
-}
+/* Empty state */
 
-.child-item button:last-of-type {
-  background: #e2e8f0;
-  color: #334155;
-}
-
-.child-item button:last-of-type:hover {
-  background: #cbd5e1;
-}
-
-.child-item button + button {
-  margin-left: 10px;
-}
-
-.child-item.selected {
-  background: rgb(49, 158, 247) !important;
-  color: white !important;
+.child-section p {
+  color: var(--text-secondary);
 }

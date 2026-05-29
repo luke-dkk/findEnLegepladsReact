@@ -20,6 +20,7 @@
 
       };
       return (
+        <div className="header-root">
         <header className="top-menu" role="banner">
           <nav aria-label="Main navigation" className="top-menu__nav">
             <ul className="top-menu__list">
@@ -47,6 +48,7 @@
             </ul>
           </nav>
         </header>
+        </div>
       );
     }
 

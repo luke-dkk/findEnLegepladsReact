@@ -8,7 +8,7 @@ import {
 
 import './ChildList.css';
 
-function ChildList({ user }) {
+function ChildList({ user, onCheckout }) {
 
   const [children, setChildren] = useState(
     user.children || []
@@ -134,6 +134,7 @@ function ChildList({ user }) {
     try {
       await checkoutAll(user.id);
       alert('Alle børn er tjekket ud');
+      onCheckout();
 
     }
     catch (error) {
@@ -143,13 +144,14 @@ function ChildList({ user }) {
         error
       );
     }
+    
   }
   
   return (
 
     <div className="child-section">
 
-      <h2>Children</h2>
+      <h2>Børn</h2>
 
       {children.length > 0 ? (
 
@@ -171,7 +173,7 @@ function ChildList({ user }) {
 
                   <div className="child-field">
 
-                    <label>Name:</label>
+                    <label>Navn:</label>
 
                     <input
                       type="text"
@@ -189,7 +191,7 @@ function ChildList({ user }) {
 
                   <div className="child-field">
 
-                    <label>Age:</label>
+                    <label>Alder:</label>
 
                     <input
                       type="number"
@@ -241,7 +243,7 @@ function ChildList({ user }) {
 
                   <div className="child-field">
 
-                    <label>Name:</label>
+                    <label>Navn:</label>
 
                     <p>
                       {child.name || 'N/A'}
@@ -251,7 +253,7 @@ function ChildList({ user }) {
 
                   <div className="child-field">
 
-                    <label>Age:</label>
+                    <label>Alder:</label>
 
                     <p>
                       {child.age || 'N/A'}
@@ -282,11 +284,10 @@ function ChildList({ user }) {
 
       ) : (
 
-        <p>No children found</p>
+        <p>Ingen børn fundet</p>
 
       )}
 
-      {/* CREATE CHILD */}
 
       <div className="add-child-section">
 
@@ -343,7 +344,12 @@ function ChildList({ user }) {
         )}
 
       </div>
-        <button onClick={checkOutChildren}>check alle ud</button> 
+        <button
+  className="checkout-button"
+  onClick={checkOutChildren}
+>
+  Check alle ud
+</button>
 
     </div>
   );
