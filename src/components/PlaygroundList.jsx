@@ -262,12 +262,12 @@ function PlaygroundList({ playgrounds }) {
                     km
                   </p>
                 )}
-                {playground.checked_in_children !== null && (
+                {playground.currently_checked_in !== null && (
                   <p>
                     <strong>
                       Børn tjekket ind:
                     </strong>{" "}
-                    {playground.checked_in_children}
+                    {playground.currently_checked_in}
                   </p>
                 )}
                 <div className="playground-links">
