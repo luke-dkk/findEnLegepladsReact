@@ -62,8 +62,7 @@ const playGroundApiFacade = {
       `${API_BASE_URL}checkin/${userId}`,
       {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`
+        headers: {Authorization: `Bearer ${token}`
         }
       }
     );

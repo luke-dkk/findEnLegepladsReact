@@ -8,16 +8,13 @@ function PlaygroundList({ playgrounds }) {
 
   const nav = useNavigate();
 
-  const [userLocation, setUserLocation] =
-    useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
-  const [sortedPlaygrounds, setSortedPlaygrounds] =
-    useState(playgrounds);
+  const [sortedPlaygrounds, setSortedPlaygrounds] = useState(playgrounds);
 
   const [page, setPage] = useState(0);
 
-  const [loadingMore, setLoadingMore] =
-    useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   /*
     Get user location
@@ -262,12 +259,12 @@ function PlaygroundList({ playgrounds }) {
                     km
                   </p>
                 )}
-                {playground.checked_in_children !== null && (
+                {playground.currently_checked_in !== null && (
                   <p>
                     <strong>
                       Børn tjekket ind:
                     </strong>{" "}
-                    {playground.checked_in_children}
+                    {playground.currently_checked_in}
                   </p>
                 )}
                 <div className="playground-links">
