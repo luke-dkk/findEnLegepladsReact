@@ -2,19 +2,18 @@ import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import playGroundApiFacade from "../../Api/ApiFacade";
 import { attachAndCreateFacility} from "../../../apiReader";
-import { checkin } from "../../../apiReader";
 import "./Playground.css";
 import { getUserFromToken } from '../utils/utils';
+import ChildList from "./ChildListPlayground.jsx/ChildList";
+
 export default function Playground() {
 
   const params = useParams();
- 
   const [playground, setPlayground] = useState(null);
   const [facility, setFacility] = useState([]);
   const [user, setUser] = useState(null);
   const [showAddFacility, setShowAddFacility] = useState(false);
   const [showCheckIn, setShowCheckIn] = useState(false);
-  const [ListOfChilrenCheckIn, setListOfChildrenCheckIn] = useState([]);
   const [allFacilities, setAllFacilities] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,9 +25,7 @@ useEffect(() => {
       const userData = await getUserFromToken();
       console.log('User data from token:', userData);
       if (!mounted) return;
-      
       setUser(userData);
-     
     }
 
     load();
@@ -249,7 +246,10 @@ const newFacility = await attachAndCreateFacility(
         <button className="check-in" onClick={handleShowCheckIn}>Check ind</button>
 
         {showCheckIn && (
-                    < ChildList user={user} />
+                    < ChildList 
+                    user={user} 
+                    playground={playground} 
+                    closeCheckIn={() => setShowCheckIn(false)} />
 
           )}
        </div>
@@ -299,74 +299,4 @@ function FacilityList({ facility }) {
 
   );
 }
-function ChildList({ user }) {
-
-  if (!user.children || user.children.length === 0) {
-    return <p>Ingen børn registreret.</p>;
-  }
-
-  function handleChildClick(child) {
-    setListOfChildrenCheckIn(prev =>
-      prev.some(c => c.id === child.id)
-        ? prev.filter(c => c.id !== child.id)
-        : [...prev, child]
-    );
-    console.log("Selected children for check-in:", ListOfChilrenCheckIn);
-  }
-
-async function submitCheckIn() {
-  if (ListOfChilrenCheckIn.length === 0) {
-    alert("Vælg mindst ét barn for at checke ind.");
-    return;
-  }
-  const childIds = ListOfChilrenCheckIn.map(
-    (child) => child.id
-  );
-
-  try {
-    const response = await checkin(
-      playground.id,
-      user.id,
-      childIds
-    );
-
-    console.log("Check-in response:", response);
-
-    alert("Check-in lykkedes!");
-    setListOfChildrenCheckIn([]);
-
-    console.log(
-      "Check-in successful, cleared selected children.",
-      response.message
-    );
-  } catch (error) {
-    alert(error.message);
-    console.error(error);
-  }
 }
-
-  return (
-    <>
-    <ul className="child-list">
-      {user.children.map((child) => {
-
-        const isSelected =
-          ListOfChilrenCheckIn.some(c => c.id === child.id);
-
-        return (
-          <li
-            key={child.id}
-            className={`child-item ${isSelected ? 'selected' : ''}`}
-            onClick={() => handleChildClick(child)}
-            
-          >
-            {child.name}
-          </li>
-        );
-      })}
-    </ul>
-    <button className="check-in-button" onClick={submitCheckIn}>Godkend check ind</button>
-    <button className="cancel-button" onClick={() => setShowCheckIn(false)}>Fortryd</button>
-    </>
-  );
-}}
