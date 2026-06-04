@@ -59,7 +59,7 @@ return (
 
         <div className="info-item">
           <label>Navn:</label>
-          <p>{user.name || 'N/A'}</p>
+          <p>{user.parentName || 'N/A'}</p>
         </div>
       </div>
 

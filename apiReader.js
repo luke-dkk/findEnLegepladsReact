@@ -49,12 +49,12 @@ export async function checkin(playgroundId, parentId, children) {
   );
 }
 
-export async function attachAndCreateFacility(playground_Id, facility_name) {
-  return fetchFromServer(`/playgrounds/${encodeURIComponent(playground_Id)}/facility/createandattach`, 
+export async function attachAndCreateFacility(playground_id, facility_name) {
+  return fetchFromServer(`/playgrounds/${encodeURIComponent(playground_id )}/facility/createandattach`, 
   {
         method: 'POST',
         body: {
-             playground_Id,
+             playground_id,
              facility_name
         }   
     })
