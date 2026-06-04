@@ -17,9 +17,14 @@ const handleSubmit = async (evt) => {
             return
         }
         console.log('credentials: ', credentials);
-        const data = await RegisterUser(credentials);
+        try {
+         await RegisterUser(credentials);
 
         navigate("/")
+  } catch (error) {
+    alert("Registrering fejlede, prøv igen", error);
+    
+  }
 }
 const handleLoginClick = () => {
     navigate("/auth/login");

@@ -14,9 +14,7 @@ export default function Login() {
     password: "",
   });
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-
+  const handleChange = (evt) => {const { name, value } = evt.target;
     setCredentials((prev) => {
       return { ...prev, [name]: value };
     });
@@ -25,22 +23,22 @@ export default function Login() {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     
-    console.log("credentials: ", credentials);
-
+try {
     const data = await login(credentials);
-
-    console.log(data);
-
     setUser({
     email: data.email
     });
     navigate("/");
-  };
+  } catch (error) {
+    alert("brugernavn og password matcher ikke", error);
+  }
+};
 
   const handleRegisterClick = () => {
     navigate("/auth/register");
   };
 
+  
   return (
     <div className="login-page">
   <div className="login-container">

@@ -11,9 +11,12 @@ export default function ProfilePage() {
 
   const [loading, setLoading] = useState(true);
   const [checkInRefresh, setCheckInRefresh] = useState(0);
+
+  
   useEffect(() => {
     let mounted = true;
-
+    
+    
     async function load() {
       const userData = await getUserFromToken();
       console.log('User data from token:', userData);
@@ -25,9 +28,9 @@ export default function ProfilePage() {
       setUser(userData);
       setLoading(false);
     }
-
     load();
 
+    
     return () => {
       mounted = false;
     };
