@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RegisterUser } from "../../../apiReader.js";
+import { RegisterUser, login } from "../../../apiReader.js";
 import { useNavigate } from "react-router";
 import "./register.css";
 export default function Register () {
@@ -16,11 +16,16 @@ const handleSubmit = async (evt) => {
             alert("Dine passwords matcher ikke, prøv igen");
             return
         }
-        console.log('credentials: ', credentials);
         try {
          await RegisterUser(credentials);
 
-        navigate("/")
+         const loginCredentials = {
+            email: credentials.email,
+            password: credentials.password
+         }
+         await login(loginCredentials);
+         navigate("/");
+        
   } catch (error) {
     alert("Registrering fejlede, prøv igen", error);
     

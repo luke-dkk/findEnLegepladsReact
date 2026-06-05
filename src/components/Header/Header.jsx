@@ -1,8 +1,7 @@
     import { NavLink, useNavigate } from "react-router";
     import "./header.css";
     import { logout } from "../../../apiReader";
-    import { useAuth } from "../utils/useAuth";
-
+    import { getCurrentUser } from "../utils/authService";
     const menuItems = [
       { label: "Playgrounds", to: "/" },
       { label: "Profil", to: "/profile" },
@@ -10,7 +9,7 @@
 
     export default function Header() {
         const navigate = useNavigate();
-        const { user } = useAuth();
+        const user = getCurrentUser();
         const handleLogout = () => {
         logout();
         navigate("/auth/login");

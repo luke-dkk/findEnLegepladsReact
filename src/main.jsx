@@ -11,13 +11,11 @@
   import  {NotFound} from './components/utils/utils.jsx'
   import 'leaflet/dist/leaflet.css';
   import { MainLayout } from './components/mainLayout/MainLayout.jsx'
-  import { AuthProvider } from './components/utils/AuthContext.jsx'
   import ProtectedRoute from './components/utils/ProtectedRoute.jsx';
 
 
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <AuthProvider>
       <BrowserRouter>
     <Routes>
 
@@ -35,11 +33,9 @@
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Route>
-
       <Route path="*" element={<NotFound />} />
-
     </Routes>
   </BrowserRouter>
-  </AuthProvider>
+ 
     </StrictMode>,
   )

@@ -223,6 +223,7 @@ export async function fetchFromServer(url, options = {}) {
 }
 export function logout() {
   localStorage.removeItem('jwtToken')
+  localStorage.removeItem('user')
   //localStorage.clear() 
 }
 

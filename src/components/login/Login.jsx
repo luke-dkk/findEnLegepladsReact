@@ -2,12 +2,10 @@ import { useState } from "react";
 import { login } from "../../../apiReader.js";
 import { useNavigate } from "react-router";
 import "./Login.css";
-import { useAuth } from "../utils/useAuth";
 import playgroundPhoto from "../../../public/findenlegepladsPhoto.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser } = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -18,14 +16,11 @@ export default function Login() {
       return { ...prev, [name]: value };
     });
   };
+
   const handleSubmit = async (evt) => {
-    evt.preventDefault();
-  
+  evt.preventDefault();
 try {
-    const data = await login(credentials);
-    setUser({
-    email: data.email
-    });
+    await login(credentials);
     navigate("/");
   } catch (error) {
     alert("brugernavn og password matcher ikke", error);
