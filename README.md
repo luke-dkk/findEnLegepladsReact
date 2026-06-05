@@ -21,7 +21,7 @@ The project helps parents and guardians discover nearby playgrounds and manage v
 - Frontend: React (Vite)
 - Routing: react-router
 - Styling: CSS files per component
-- API calls are centralized in `src/Api/ApiFacade.js` and ``
+- API calls are centralized in `apiReader.js`.
 
 ## Local setup
 
@@ -41,12 +41,6 @@ npm run dev
 
 ```bash
 npm run build
-```
-
-4. Linting:
-
-```bash
-npm run lint
 ```
 
 The main app entry point is `src/main.jsx` and routes are defined in `src/App.jsx`.
