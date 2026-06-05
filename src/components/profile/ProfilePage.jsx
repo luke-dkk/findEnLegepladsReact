@@ -8,12 +8,12 @@ import './profile.css';
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-
   const [loading, setLoading] = useState(true);
   const [checkInRefresh, setCheckInRefresh] = useState(0);
+
   useEffect(() => {
     let mounted = true;
-
+    
     async function load() {
       const userData = await getUserFromToken();
       console.log('User data from token:', userData);
@@ -25,9 +25,9 @@ export default function ProfilePage() {
       setUser(userData);
       setLoading(false);
     }
-
     load();
 
+    
     return () => {
       mounted = false;
     };
@@ -42,10 +42,7 @@ return (
   <div className="profile-page">
   <div className="profile-container">
     <h1>Profil</h1>
-
     <div className="profile-info">
-
-      
       <div className="info-section">
         <h2>Dine oplysninger</h2>
 
@@ -56,11 +53,10 @@ return (
 
         <div className="info-item">
           <label>Navn:</label>
-          <p>{user.name || 'N/A'}</p>
+          <p>{user.parentName || 'N/A'}</p>
         </div>
       </div>
 
-      
       <ChildList
   user={user}
   onCheckout={() =>

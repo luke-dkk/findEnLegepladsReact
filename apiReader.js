@@ -1,7 +1,9 @@
 const BACKEND_URL = 'https://findenlegeplads.team-ice.dk/api'
 
 export async function login(credentials) {
+  
   const response = await fetch(`${BACKEND_URL}/auth/login`, {
+    //includeAuth: false
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -23,83 +25,45 @@ export async function login(credentials) {
 }
 
 export async function checkoutAll(parentId) {
-  const token = localStorage.getItem("jwtToken");
-  const response = await fetch(`${BACKEND_URL}/checkoutall`, {
-    
+  return await fetchFromServer('/checkoutall', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json',
-      authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({ user_id: parentId }),
+    body: { user_id: parentId },
   })
-  if (!response.ok) {
-    throw new Error(`Checkout failed: ${response.status}`)
-  }
-  const data = await response.json()
-  console.log('Checkout successful:', data)
-  return data
+
 }
 
 
-export async function checkin(
-  playgroundId,
-  parentId,
-  children
-) {
-  const token = localStorage.getItem("jwtToken");
-
-  const response = await fetch(
-    `${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`,
+export async function checkin(playgroundId, parentId, children) {
+  return fetchFromServer(
+    `/playgrounds/${encodeURIComponent(playgroundId)}/checkins/checkin`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+      body: {
         playground_id: playgroundId,
         user_id: parentId,
         children: children.map((id) => ({
           id: id,
-        })),
-      }),
+        }))
+      },
     }
   );
-
-  if (!response.ok) {
-    const errorData = await response.json();
-
-    throw new Error(
-      errorData.message || "Check-in failed"
-    );
-  }
-
-  return await response.json();
 }
 
-export async function attachAndCreateFacility(playgroundId, facilityData) {
-  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/facility/createandattach`, 
+export async function attachAndCreateFacility(playground_id, facility_name) {
+  return fetchFromServer(`/playgrounds/${encodeURIComponent(playground_id )}/facility/createandattach`, 
   {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            playground_id: playgroundId,
-            facility_name: facilityData
-        }),
+        body: {
+             playground_id,
+             facility_name
+        }   
     })
-
-  if (!response.ok) {
-    throw new Error(`Failed to create and attach facility: ${response.status}`)
-  }
-  const data = await response.json()
-  console.log('Created and attached facility:', data)
-  return data
 }
 
 
 export async function updateChild(userid, id, updatedChildData) {
 
-  return await fetchFromServer(
+  return  fetchFromServer(
     `users/${encodeURIComponent(userid)}/children/${encodeURIComponent(id)}`,
     {
       method: 'PUT',
@@ -109,18 +73,15 @@ export async function updateChild(userid, id, updatedChildData) {
 }
 
 export async function deleteChild(userid, id) {
-  return await fetchFromServer(
+  return fetchFromServer(
     `users/${encodeURIComponent(userid)}/children/${encodeURIComponent(id)}`,
-    { method: 'DELETE',
-      headers: { 'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
-       },
+    { method: 'DELETE'
      }
   );
 }
 
 export async function createChild(userid, childData) {
-  return await fetchFromServer(
+  return fetchFromServer(
     `users/${encodeURIComponent(userid)}/children`,
     {
       method: 'POST',
@@ -131,76 +92,69 @@ export async function createChild(userid, childData) {
 
 export async function getUserById(id){
   // GET requests must not include a body. Use fetchFromServer to include auth headers
-  return await fetchFromServer(`users/${encodeURIComponent(id)}`, { method: 'GET' })
+  return fetchFromServer(`users/${encodeURIComponent(id)}`, { method: 'GET' })
 }
 
-export async function RegisterUser(information){
-    const response = await fetch(`${BACKEND_URL}/auth/register`, 
-      {method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(information),
-  })
-  
-  if(!response.ok){
-    console.log("couldnt register user", response)
-    throw new Error(`Registration failed: ${response.status}`)
-    
 
-  }   console.log("you made it this far 1")
-      const data = await response.json()
-      console.log("you made it this far 2", response)
-      const user = {
-        email: data.email,
-        password: information.password
-};
-
-      login(user);
-
+export async function RegisterUser(information) {
+  const data = await fetchFromServer('/auth/register', {
+    method: 'POST',
+    body: information,
+    includeAuth: false
+  });
+  const user = {
+    email: data.email,
+    password: information.password
+  };
+  await login(user);
 }
-export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMeters, page, size = 15) {
-    const response = await fetch(`${BACKEND_URL}/playgrounds/nearme`,
-    {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            latitude,
-            longitude,
-            radiusInMeters,
-            page,
-            size
-        }),
-    })
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch nearby playgrounds: ${response.status}`)
+
+export async function getPlaygroundsNearLocation(latitude, longitude, radiusInMeters, page, size = 15)
+{
+  return fetchFromServer('/playgrounds/nearme', {
+    method: 'POST',
+    body: {
+      latitude,
+      longitude,
+      radiusInMeters,
+      page,
+      size
     }
-    const data = await response.json()
-    console.log('Fetched nearby playgrounds:', data)
-    return data
-
+  });
 }
 
 export async function attachFacilityToPlayground(playgroundId, facilityId) {
-  const response = await fetch(`${BACKEND_URL}/playgrounds/${encodeURIComponent(playgroundId)}/facility/attach`,
+  return fetchFromServer(`/playgrounds/${encodeURIComponent(playgroundId)}/facility/attach`,
     {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
+      body: {
         facility_id: facilityId,
         playground_id: playgroundId,
-        }),
+      },
     })
+}
 
-  if (!response.ok) {
-    throw new Error(`Failed to attach facility to playground: ${response.status}`)
-  }
-const data = await response.json()
-console.log('Attached facility to playground:', data)
-return data
+export async function getAllFacilities() {
+  const data = await fetchFromServer('/facility', {
+    method: 'GET',
+  })
+
+  return Array.isArray(data) ? data : data.facilities || []
 }
 
 
+export async function getPlaygroundById(id) {
+  return fetchFromServer(`/playgrounds/${encodeURIComponent(id)}`, {
+    method: 'GET',
+  })
+}
 
+export async function getActiveCheckIns(userId) {
+  return fetchFromServer(`/checkin/${encodeURIComponent(userId)}`, {
+    method: 'GET',
+  })
+}
 
 
 
@@ -261,10 +215,15 @@ export async function fetchFromServer(url, options = {}) {
   if (contentType.includes('application/json')) {
     return response.json()
   }
-  return response.text() //Forstår ikke helt hvorfor vi returnere text men det er fordi at hvis det ikke er json så kan det være en fejlbesked eller lignende som bare er tekst, og så vil vi gerne have den tekst tilbage i stedet for at prøve at parse det som json og så fejle. Det er en fallback for at håndtere ikke-json svar på en mere robust måde.
+  return response.text() 
+  //Forstår ikke helt hvorfor vi returnere text 
+  // men det er fordi at hvis det ikke er json så kan det være en fejlbesked eller lignende som bare er tekst,
+  //  og så vil vi gerne have den tekst tilbage i stedet for at prøve at parse det som json og så fejle. 
+  // Det er en fallback for at håndtere ikke-json svar på en mere robust måde.
 }
 export function logout() {
   localStorage.removeItem('jwtToken')
+  //localStorage.clear() 
 }
 
 

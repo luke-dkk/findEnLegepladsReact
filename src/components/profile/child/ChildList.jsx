@@ -1,76 +1,51 @@
 import { useState } from 'react';
-import {
-  updateChild,
-  deleteChild,
-  createChild,
-  checkoutAll
-} from '../../../../apiReader';
+import { updateChild, deleteChild, createChild,checkoutAll} from '../../../../apiReader';
 
 import './ChildList.css';
 
 function ChildList({ user, onCheckout }) {
 
-  const [children, setChildren] = useState(
-    user.children || []
-  );
+  
 
-  const [editingChildId, setEditingChildId] =
-    useState(null);
-
-  const [showCreateChild, setShowCreateChild] =
-    useState(false);
-
-  const [newChild, setNewChild] = useState({
-    name: '',
-    age: ''
-  });
+const [editingChildId, setEditingChildId] = useState(null);
+const [showCreateChild, setShowCreateChild] = useState(false);
+const [newChild, setNewChild] = useState({name: '',age: ''});
+const [children, setChildren] = useState( user.children || []);
 
   const handleChange = (index, field, value) => {
-
     const updatedChildren = children.map((child, i) =>
       i === index
         ? { ...child, [field]: value }
         : child
     );
-
     setChildren(updatedChildren);
   };
 
   const handleDelete = async (child) => {
-
     try {
-
       await deleteChild(user.id, child.id);
-
       setChildren((prevChildren) =>
         prevChildren.filter(
           (c) => c.id !== child.id
         )
       );
-
     } catch (error) {
         alert('Kunne ikke slette barnet')
-
       console.error(
         'Failed to delete child',
         error
       );
-
     }
   };
 
   const handleSave = async (child) => {
-
     try {
-
       console.log('Saving child:', child);
-
       const updatedChild = await updateChild(
         user.id,
         child.id,
         child
       );
-
       console.log(
         'Updated child:',
         updatedChild
@@ -92,14 +67,11 @@ function ChildList({ user, onCheckout }) {
         'Failed to save child',
         error
       );
-
     }
   };
 
   const handleCreateChild = async () => {
-
     try {
-
       const createdChild = await createChild(
         user.id,
         newChild
@@ -124,7 +96,6 @@ function ChildList({ user, onCheckout }) {
         'Failed to create child',
         error
       );
-
     }
   };
 

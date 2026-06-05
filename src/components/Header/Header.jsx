@@ -3,22 +3,19 @@
     import { logout } from "../../../apiReader";
     import { useAuth } from "../utils/useAuth";
 
-
     const menuItems = [
       { label: "Playgrounds", to: "/" },
       { label: "Profil", to: "/profile" },
     ];
 
-
     export default function Header() {
         const navigate = useNavigate();
         const { user } = useAuth();
-        
         const handleLogout = () => {
         logout();
         navigate("/auth/login");
-
       };
+      
       return (
         <div className="header-root">
         <header className="top-menu" role="banner">

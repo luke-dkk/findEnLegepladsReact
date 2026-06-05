@@ -1,28 +1,25 @@
 
 import { checkin } from "../../../../apiReader";
 import { useState, useEffect } from "react";
-import ApiFacade from "../../../Api/ApiFacade";
+import { getActiveCheckIns } from "../../../../apiReader";
 import "./ChildList.css";
+
 export default function ChildList({ user, playground, closeCheckIn }) {
-
-
  const [ListOfChildrenCheckIn, setListOfChildrenCheckIn] = useState([]);
  const [alreadyCheckedInChildren, setAlreadyCheckedInChildren] = useState([]);
  const [uselessCounter, setUselessCounter] = useState(0);
+
 useEffect(() => {
   async function loadCheckIns() {
     try {
       const activeCheckIns =
-        await ApiFacade.getActiveCheckIns(user.id);
-
+        await getActiveCheckIns(user.id);
       console.log("activeCheckIns", activeCheckIns);
-
       setAlreadyCheckedInChildren(activeCheckIns);
     } catch (error) {
       console.error(error);
     }
   }
-
   if (user?.id) {
     loadCheckIns();
   }
@@ -88,7 +85,7 @@ async function submitCheckIn() {
       ListOfChildrenCheckIn.some(
         c => c.id === child.id
       );
-
+      
     const isAlreadyCheckedIn =
       alreadyCheckedInChildren.some(checkIn =>
         checkIn.children.some(

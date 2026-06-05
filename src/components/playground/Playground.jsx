@@ -1,13 +1,13 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import playGroundApiFacade from "../../Api/ApiFacade";
-import { attachAndCreateFacility} from "../../../apiReader";
+import { getAllFacilities, getPlaygroundById, attachAndCreateFacility } from "../../../apiReader";
 import "./Playground.css";
 import { getUserFromToken } from '../utils/utils';
-import ChildList from "./ChildListPlayground.jsx/ChildList";
+import ChildList from '../playground/childList/ChildList';
+import FacilityList from "./facility/FacilityList.jsx";
+
 
 export default function Playground() {
-
   const params = useParams();
   const [playground, setPlayground] = useState(null);
   const [facility, setFacility] = useState([]);
@@ -16,7 +16,6 @@ export default function Playground() {
   const [showCheckIn, setShowCheckIn] = useState(false);
   const [allFacilities, setAllFacilities] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
 
 useEffect(() => {
     let mounted = true;
@@ -27,7 +26,6 @@ useEffect(() => {
       if (!mounted) return;
       setUser(userData);
     }
-
     load();
 
     return () => {
@@ -35,67 +33,44 @@ useEffect(() => {
     };
   }, []);
 
-
-
-  
   useEffect(() => {
     (async () => {
 
       const playgroundFromServer =
-        await playGroundApiFacade
-          .getPlaygroundById(params.id);
+        await getPlaygroundById(params.id);
 
       setPlayground(playgroundFromServer);
 
       setFacility(
         playgroundFromServer.facility || []
       );
-
     })();
-
   }, [params.id]);
-
 
   async function handleShowCheckIn() {
     setShowCheckIn(true);
   }
 
   async function handleOpenFacilityMenu() {
-
     setShowAddFacility(true);
-
     try {
-
-      const facilities =
-        await playGroundApiFacade
-          .getAllFacilities();
-
+      const facilities =await getAllFacilities();
       setAllFacilities(facilities);
-
     } catch (error) {
-
       console.error(
         "Error fetching facilities:",
         error
       );
-
     }
   }
 
-  
-
-
   function handleCloseFacilityMenu() {
-
     setShowAddFacility(false);
-
     setSearchTerm("");
-
   }
 
 async function submitFacility() {
   setShowAddFacility(false);
-
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
   if (!normalizedSearch) {
@@ -116,8 +91,6 @@ async function submitFacility() {
     return;
   }
 
-
-
   try {
 const newFacility = await attachAndCreateFacility(
         playground.id,
@@ -137,7 +110,6 @@ const newFacility = await attachAndCreateFacility(
   }
 }
 
-
   const filteredFacilities =
     allFacilities.filter((fac) =>
       fac.name
@@ -152,8 +124,6 @@ const newFacility = await attachAndCreateFacility(
       </div>
     );
   }
-
-
 
   return (
 <div className="playground-page">
@@ -270,33 +240,4 @@ const newFacility = await attachAndCreateFacility(
 
 
   );
-
-
-
-
-function FacilityList({ facility }) {
-
-  if (!facility || facility.length === 0) {
-    return <p>Ingen faciliteter registreret.</p>;
-  }
-
-  return (
-
-    <ul className="facility-list">
-
-      {facility.map((fac) => (
-
-        <li
-          className="facility-item"
-          key={fac.id}
-        >
-          {fac.name}
-        </li>
-
-      ))}
-
-    </ul>
-
-  );
-}
 }

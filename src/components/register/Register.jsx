@@ -5,11 +5,11 @@ import "./register.css";
 export default function Register () {
 const navigate = useNavigate();
 const [credentials, setCredentials] = useState({parentName:'', password:'', confirmPassword:'', email:''});
-
 const handleChange = (evt) => {
     const {name, value} = evt.target;
     setCredentials((prev)=> {return {...prev, [name]: value}});
 }
+
 const handleSubmit = async (evt) => {
     evt.preventDefault();
         if (credentials.password !== credentials.confirmPassword){
@@ -17,14 +17,19 @@ const handleSubmit = async (evt) => {
             return
         }
         console.log('credentials: ', credentials);
-        const data = await RegisterUser(credentials);
+        try {
+         await RegisterUser(credentials);
 
         navigate("/")
+  } catch (error) {
+    alert("Registrering fejlede, prøv igen", error);
+    
+  }
 }
+
 const handleLoginClick = () => {
     navigate("/auth/login");
 }
-
 
     return (
   <div className="register-page">

@@ -1,20 +1,18 @@
 import {useState, useEffect} from "react";
-import ApiFacade from "../../../Api/ApiFacade.js";
+import {getActiveCheckIns} from "../../../apiReader";
 import "./CheckIn.css";
 export default function CheckIn({user, refresh}) {
   const [activeCheckIns, setActiveCheckIns] = useState([]);
 
  useEffect(() => {
-    // Simulate fetching check-in status from an API
     const fetchCheckInStatus = async () => {
-      const result = await ApiFacade.getActiveCheckIns(user.id);
+      const result = await getActiveCheckIns(user.id);
       setActiveCheckIns(result);
       console.log("user:", user);
       console.log("result:", result);
     }
     fetchCheckInStatus();
   }, [user.id, refresh]);
-
 
   return (
     <div className="check-in-container">
@@ -33,8 +31,7 @@ export default function CheckIn({user, refresh}) {
     {checkIn.children.length > 1 ? "Børn" : "Barn"}:
   </strong>{" "}
   {checkIn.children.map(child => child.name).join(", ")}
-</p>
-          
+</p>       
           <p>
             <strong>Checket ind:</strong>{" "}
             {new Date(

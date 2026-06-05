@@ -1,12 +1,5 @@
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup
-} from 'react-leaflet';
-
+import { MapContainer,TileLayer,Marker,Popup} from 'react-leaflet';
 import L from 'leaflet';
-
 import 'leaflet/dist/leaflet.css';
 
 const playgroundIcon = new L.Icon({
@@ -24,7 +17,6 @@ const userIcon = new L.Icon({
   iconSize: [30, 30],
   iconAnchor: [15, 30],
 });
-
 
 export default function PlaygroundsMap({
   userLocation,
@@ -55,10 +47,6 @@ export default function PlaygroundsMap({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-
-
-      
-
       <Marker
         position={[
           userLocation.lat,
@@ -71,9 +59,6 @@ export default function PlaygroundsMap({
             </Popup>
       </Marker>
 
-
-
-      
 
       {playgrounds.map((playground) => (
 
@@ -90,27 +75,19 @@ export default function PlaygroundsMap({
       onMarkerClick(playground.id)
   }}
 >
-
           <Popup>
-
             <strong>
               {playground.name}
             </strong>
-
             <br />
-
             {playground.distance &&
               `${Math.round(
                 playground.distance
               )} meter væk`
             }
-
           </Popup>
-
         </Marker>
-
       ))}
-
     </MapContainer>
 </div>
   );
