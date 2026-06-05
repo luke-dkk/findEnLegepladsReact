@@ -14,11 +14,6 @@
   import { AuthProvider } from './components/utils/AuthContext.jsx'
   import ProtectedRoute from './components/utils/ProtectedRoute.jsx';
 
-//TODO: Add error handling for login and register forms.
-//{
-//TODO: fix backend response on curently cheked to get a playground name.
-
-//}
 
   createRoot(document.getElementById('root')).render(
     <StrictMode>

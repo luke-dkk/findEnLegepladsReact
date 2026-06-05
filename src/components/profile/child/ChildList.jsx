@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  updateChild,
-  deleteChild,
-  createChild,
-  checkoutAll
+import { updateChild, deleteChild, createChild,checkoutAll
 } from '../../../../apiReader';
 
 import './ChildList.css';

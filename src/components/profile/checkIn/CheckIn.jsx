@@ -5,7 +5,6 @@ export default function CheckIn({user, refresh}) {
   const [activeCheckIns, setActiveCheckIns] = useState([]);
 
  useEffect(() => {
-    // Simulate fetching check-in status from an API
     const fetchCheckInStatus = async () => {
       const result = await ApiFacade.getActiveCheckIns(user.id);
       setActiveCheckIns(result);
@@ -14,7 +13,6 @@ export default function CheckIn({user, refresh}) {
     }
     fetchCheckInStatus();
   }, [user.id, refresh]);
-
 
   return (
     <div className="check-in-container">
