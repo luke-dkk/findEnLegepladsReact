@@ -20,7 +20,7 @@ export default function Login() {
   };
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    localStorage.clear('jtwtoken');
+    localStorage.clear('jwtToken');
 try {
     const data = await login(credentials);
     setUser({
