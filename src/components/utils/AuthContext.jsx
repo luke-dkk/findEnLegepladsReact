@@ -1,15 +1,15 @@
-import { createContext, useState } from "react";
-import { getCurrentUser } from "../utils/authService";
+  import { createContext, useState } from "react";
+  import { getCurrentUser } from "../utils/authService";
 
-export const AuthContext = createContext();
+  export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => getCurrentUser());
+  export function AuthProvider({ children }) {
+    const [user, setUser] = useState(() => getCurrentUser());
 
-  
-  return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+    
+    return (
+      <AuthContext.Provider value={{ user, setUser }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }

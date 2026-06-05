@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {getActiveCheckIns} from "../../../apiReader";
+import {getActiveCheckIns} from "../../../../apiReader";
 import "./CheckIn.css";
 export default function CheckIn({user, refresh}) {
   const [activeCheckIns, setActiveCheckIns] = useState([]);
