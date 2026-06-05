@@ -21,6 +21,7 @@ export default function Login() {
   evt.preventDefault();
 try {
     await login(credentials);
+  
     navigate("/");
   } catch (error) {
     alert("brugernavn og password matcher ikke", error);
