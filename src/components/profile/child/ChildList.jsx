@@ -5,7 +5,8 @@ import './ChildList.css';
 
 function ChildList({ user, onCheckout }) {
 
-  
+
+
 
 const [editingChildId, setEditingChildId] = useState(null);
 const [showCreateChild, setShowCreateChild] = useState(false);

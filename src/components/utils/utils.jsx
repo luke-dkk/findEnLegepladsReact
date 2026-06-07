@@ -1,5 +1,7 @@
     import { useParams, useOutletContext  } from "react-router"
     import { getUserById } from "../../../apiReader.js";
+    import styles from "./utils.module.css";
+
 /**
  * Decodes a JWT token and extracts the payload
  * @param {string} token - The JWT token
@@ -53,14 +55,18 @@ export async function getUserFromToken() {
 
 
 export function NotFound() {
-        let params = useParams()
-        return (
-    <>
-    404 the ressource: {params["*"]} you are looking for couldn't be found
-    </>
+  const params = useParams();
 
-        )
-    }
+  return (
+    <div className={styles.notFound}>
+      404 - Siden {" "}
+      <span className={styles.path}>
+        {params["*"]}
+      </span>{" "}
+      blev ikke fundet.
+    </div>
+  );
+}
 
       export function ShowName() {
         const { parentName } = useOutletContext();

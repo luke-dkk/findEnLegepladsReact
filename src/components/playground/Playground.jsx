@@ -17,6 +17,8 @@ export default function Playground() {
   const [allFacilities, setAllFacilities] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  
+
 useEffect(() => {
     let mounted = true;
 
